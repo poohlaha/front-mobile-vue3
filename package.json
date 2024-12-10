@@ -15,11 +15,12 @@
   "author": "poohlaha",
   "license": "MIT/Apache-2.0",
   "scripts": {
-    "start": "node ./scripts/build.js start",
-    "dev": "rimraf build && node ./scripts/build.js build",
-    "simulate": "rimraf build && node ./scripts/build.js simulate",
-    "prod": "rimraf dist && node ./scripts/build.js prod",
-    "format": "npx prettier --write .",
+    "copy": "node ./scripts/index.js copy",
+    "start": "node ./scripts/index.js start",
+    "build": "node ./scripts/index.js dev",
+    "prod": "node ./scripts/index.js prod",
+    "simulate": "node ./scripts/index.js simulate",
+    "format": "npx prettier --write src",
     "report": "jscpd --pattern 'src/views/**/*.{vue,ts,js}'",
     "updater": "node ./scripts/updater.js"
   },
@@ -31,13 +32,14 @@
     "vant": "^4.9.10",
     "vue": "^3.2.37",
     "vue-router": "^4.1.2",
-    "vuex": "^4.1.0"
+    "vuex": "^4.1.0",
+    "typescript": "^5.7.2"
   },
   "devDependencies": {
     "core-js": "^3.8.3",
     "@bale-tools/mutate-minimize": "^1.0.6",
     "@bale-tools/mutate-service": "^2.3.2",
-    "@bale-tools/mutate-version": "^2.2.3",
+    "@bale-tools/mutate-version": "^2.2.4",
     "@bale-tools/utils": "^2.0.7",
     "@babel/eslint-parser": "^7.25.9",
     "@commitlint/cli": "^19.6.0",
@@ -58,7 +60,6 @@
     "eslint-plugin-vue": "^9.32.0",
     "husky": "^9.1.7",
     "jscpd": "^4.0.5",
-    "typescript": "^5.7.2",
     "lint-staged": "^15.2.10",
     "n-readlines": "^1.0.1",
     "postcss-aspect-ratio-mini": "^1.1.0",
@@ -75,5 +76,19 @@
     "@typescript-eslint/eslint-plugin": "^8.18.0",
     "@typescript-eslint/parser": "^8.18.0",
     "@vue/cli-plugin-typescript": "~5.0.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "**/*.{vue,jsx,js,tsx,ts,json,css,md}": [
+      "prettier --write"
+    ],
+    "**/*.{vue,jsx,js,tsx,ts}": [
+      "eslint --fix"
+    ]
   }
 }

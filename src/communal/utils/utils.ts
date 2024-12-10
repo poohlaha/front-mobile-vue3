@@ -1,4 +1,4 @@
-import CryptoJS from "crypto-js";
+import CryptoJS from 'crypto-js'
 
 const Utils = {
   /**
@@ -6,97 +6,95 @@ const Utils = {
    */
   setLocal: (name: string, item: any, needExpTime = false) => {
     if (!item || (Array.isArray(item) && item.length === 0)) {
-      window.localStorage.setItem(name, "");
-      return;
+      window.localStorage.setItem(name, '')
+      return
     }
 
-    let data: any = null;
+    let data: any = null
     if (needExpTime) {
       data = {
         data: item,
         time: new Date().getTime(),
-      };
+      }
     } else {
-      data = item;
+      data = item
     }
 
-    if (typeof data !== "string") data = JSON.stringify(data);
+    if (typeof data !== 'string') data = JSON.stringify(data)
 
-    window.localStorage.setItem(name, Utils.encrypt(data));
+    window.localStorage.setItem(name, Utils.encrypt(data))
   },
 
   /**
    * 从localStorage中获取值
    */
   getLocal: (name: string, needExpTime = false) => {
-    const item = window.localStorage.getItem(name);
-    if (!item) return null;
+    const item = window.localStorage.getItem(name)
+    if (!item) return null
 
-    const data = Utils.decrypt(item);
-    if (!needExpTime) return data;
-    return item ? JSON.parse(data) : data;
+    const data = Utils.decrypt(item)
+    if (!needExpTime) return data
+    return item ? JSON.parse(data) : data
   },
 
   /**
    * 从localStorage中移除token
    */
   removeLocal: (name: string) => {
-    window.localStorage.removeItem(name);
+    window.localStorage.removeItem(name)
   },
 
   /**
    * 从sessionStorage中设置值
    */
   setSession: (name: string, item: any, needExpTime = false) => {
-    if (!item) return;
+    if (!item) return
 
     if (needExpTime) {
       let data: string = JSON.stringify({
         data: item,
         time: new Date().getTime(),
-      });
+      })
 
-      window.sessionStorage.setItem(name, Utils.encrypt(data));
-      return;
+      window.sessionStorage.setItem(name, Utils.encrypt(data))
+      return
     }
 
     window.sessionStorage.setItem(
       name,
-      typeof item !== "string"
-        ? Utils.encrypt(JSON.stringify(item))
-        : Utils.encrypt(item),
-    );
+      typeof item !== 'string' ? Utils.encrypt(JSON.stringify(item)) : Utils.encrypt(item)
+    )
   },
 
   /**
    * 从sessionStorage中获取值
    */
   getSession: (name: string, needExpTime: boolean = false) => {
-    const item = window.sessionStorage.getItem(name);
-    if (!item) return null;
-    if (!needExpTime) return Utils.decrypt(item);
-    return item ? JSON.parse(Utils.decrypt(item)) : Utils.decrypt(item);
+    const item = window.sessionStorage.getItem(name)
+    if (!item) return null
+    if (!needExpTime) return Utils.decrypt(item)
+    return item ? JSON.parse(Utils.decrypt(item)) : Utils.decrypt(item)
   },
 
   /**
    * 从sessionStorage中移除值
    */
   removeSession: (name: string) => {
-    window.sessionStorage.removeItem(name);
+    window.sessionStorage.removeItem(name)
   },
 
   /**
    * 从localStorage移除所有数据
    */
   clearLocalStorage: () => {
-    window.localStorage.clear();
+    window.localStorage.clear()
   },
 
   /**
    * 从sessionStorage移除所有数据
    */
   clearSessionStorage: () => {
-    window.sessionStorage.clear();
+    window.sessionStorage.clear()
   },
 
   /**
@@ -104,39 +102,26 @@ const Utils = {
    */
   generateUUID: () => {
     let random = function () {
-      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
+    }
 
-    return (
-      random() +
-      random() +
-      "-" +
-      random() +
-      "-" +
-      random() +
-      "-" +
-      random() +
-      "-" +
-      random() +
-      random() +
-      random()
-    );
+    return random() + random() + '-' + random() + '-' + random() + '-' + random() + '-' + random() + random() + random()
   },
 
   /**
    * 加密
    */
   encrypt: (str: any): string => {
-    if (!str) return "";
-    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str));
+    if (!str) return ''
+    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str))
   },
 
   /**
    * 解密
    */
   decrypt: (str: any): string => {
-    if (!str) return "";
-    return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8);
+    if (!str) return ''
+    return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8)
   },
 
   /**
@@ -144,15 +129,15 @@ const Utils = {
    * @param date
    * @param format
    */
-  formatDateStr: (date: any, format: string = "yyyy-MM-dd") => {
-    if (!date) return "";
+  formatDateStr: (date: any, format: string = 'yyyy-MM-dd') => {
+    if (!date) return ''
 
     if (!(date instanceof Date)) {
-      date = new Date(date);
+      date = new Date(date)
     }
 
     // @ts-ignore
-    if (!(date instanceof Date)) return;
+    if (!(date instanceof Date)) return
     let dict = {
       yyyy: date.getFullYear(),
       M: date.getMonth() + 1,
@@ -160,16 +145,16 @@ const Utils = {
       H: date.getHours(),
       m: date.getMinutes(),
       s: date.getSeconds(),
-      MM: ("" + (date.getMonth() + 101)).substr(1),
-      dd: ("" + (date.getDate() + 100)).substr(1),
-      HH: ("" + (date.getHours() + 100)).substr(1),
-      mm: ("" + (date.getMinutes() + 100)).substr(1),
-      ss: ("" + (date.getSeconds() + 100)).substr(1),
-    };
+      MM: ('' + (date.getMonth() + 101)).substr(1),
+      dd: ('' + (date.getDate() + 100)).substr(1),
+      HH: ('' + (date.getHours() + 100)).substr(1),
+      mm: ('' + (date.getMinutes() + 100)).substr(1),
+      ss: ('' + (date.getSeconds() + 100)).substr(1),
+    }
     return format.replace(/(yyyy|MM?|dd?|HH?|ss?|mm?)/g, function () {
       // @ts-ignore
-      return dict[arguments[0]];
-    });
+      return dict[arguments[0]]
+    })
   },
 
   /**
@@ -178,13 +163,13 @@ const Utils = {
    * @param needTime
    */
   formatDate: (date: any, needTime = true) => {
-    if (!date) return "";
-    const pad = (n: any) => (n < 10 ? `0${n}` : n);
-    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
-    if (!needTime) return `${dateStr}`;
+    if (!date) return ''
+    const pad = (n: any) => (n < 10 ? `0${n}` : n)
+    const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
+    if (!needTime) return `${dateStr}`
 
-    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`;
-    return `${dateStr} ${timeStr}`;
+    const timeStr = `${pad(date.getHours())}:${pad(date.getMinutes())}`
+    return `${dateStr} ${timeStr}`
   },
 
   /**
@@ -197,35 +182,28 @@ const Utils = {
   getJsonTextByCode: (
     code: string | number,
     arr: Array<any> = [],
-    prop: string = "code",
-    returnProp: string = "text",
+    prop: string = 'code',
+    returnProp: string = 'text'
   ) => {
-    let newArr: any = arr.filter((item: any) => item[prop] === code) || [];
+    let newArr: any = arr.filter((item: any) => item[prop] === code) || []
     // returnProp === 'all' 返回整个对象
-    return newArr.length > 0
-      ? (returnProp === "all" ? newArr[0] : newArr[0][returnProp]) || ""
-      : "";
+    return newArr.length > 0 ? (returnProp === 'all' ? newArr[0] : newArr[0][returnProp]) || '' : ''
   },
 
   /**
    * 检验字符串是否为空
    */
   isBlank: (value: string) => {
-    return (
-      value === undefined ||
-      value == null ||
-      /^[ ]+$/.test(value) ||
-      value.length === 0
-    );
+    return value === undefined || value == null || /^[ ]+$/.test(value) || value.length === 0
   },
 
   /**
    * 格式化电话号码, 前三位、四位一体
    */
   formatPhone: (phone: string) => {
-    if (Utils.isBlank(phone)) return;
-    phone = Utils.getFormatPhone(phone).trim();
-    return phone.replace(/^(.{3})(.*)(.{4})/, "$1 $2 $3");
+    if (Utils.isBlank(phone)) return
+    phone = Utils.getFormatPhone(phone).trim()
+    return phone.replace(/^(.{3})(.*)(.{4})/, '$1 $2 $3')
   },
 
   /**
@@ -234,10 +212,10 @@ const Utils = {
   getFormatPhone: (phone: string) => {
     if (!Utils.isBlank(phone)) {
       // 去除空格
-      phone = phone.replace(/ /g, "");
+      phone = phone.replace(/ /g, '')
     }
 
-    return phone;
+    return phone
   },
 
   /**
@@ -245,18 +223,14 @@ const Utils = {
    * @param   {any}       target         需要判断对象
    */
   isObject: (target: any) => {
-    return typeof target === "object";
+    return typeof target === 'object'
   },
 
   /**
    * 判断对象是否为空
    */
   isObjectNull: (target: { [K: string]: any } = {}) => {
-    return (
-      !target ||
-      (JSON.stringify(target) === "{}" &&
-        (Object.keys(target) || []).length === 0)
-    );
+    return !target || (JSON.stringify(target) === '{}' && (Object.keys(target) || []).length === 0)
   },
 
   /**
@@ -264,19 +238,19 @@ const Utils = {
    */
   deepCopy: (o: any) => {
     if (o instanceof Array) {
-      let n: Array<any> = [];
+      let n: Array<any> = []
       for (let i = 0; i < o.length; ++i) {
-        n[i] = Utils.deepCopy(o[i]);
+        n[i] = Utils.deepCopy(o[i])
       }
-      return n;
+      return n
     } else if (o instanceof Object) {
-      let n: any = {};
+      let n: any = {}
       for (let i in o) {
-        n[i] = Utils.deepCopy(o[i]);
+        n[i] = Utils.deepCopy(o[i])
       }
-      return n;
+      return n
     } else {
-      return o;
+      return o
     }
   },
 
@@ -285,17 +259,12 @@ const Utils = {
    * @param str --- 要转换的字符串
    * @param needUpperCase --- 首字母是否需要转成大写
    */
-  capitalizeFirstChar: function (
-    str: string = "",
-    needUpperCase: boolean = true,
-  ) {
-    if (Utils.isBlank(str)) return "";
-    let firstChar = str.substring(0, 1);
-    let surplusChar = str.substring(1, str.length);
-    firstChar = needUpperCase
-      ? firstChar.toUpperCase()
-      : firstChar.toLowerCase();
-    return firstChar + surplusChar;
+  capitalizeFirstChar: function (str: string = '', needUpperCase: boolean = true) {
+    if (Utils.isBlank(str)) return ''
+    let firstChar = str.substring(0, 1)
+    let surplusChar = str.substring(1, str.length)
+    firstChar = needUpperCase ? firstChar.toUpperCase() : firstChar.toLowerCase()
+    return firstChar + surplusChar
   },
 
   /**
@@ -303,65 +272,62 @@ const Utils = {
    * @param str --- 要转换的字符串
    * @param separator --- 分割符, 默认: -
    */
-  charToLine: function (str: string = "", separator: string = "-") {
-    if (Utils.isBlank(str)) return "";
-    let word = "";
+  charToLine: function (str: string = '', separator: string = '-') {
+    if (Utils.isBlank(str)) return ''
+    let word = ''
     for (let i = 0; i < str.length; i++) {
-      let char = str[i];
-      if (char >= "A" && char <= "Z" && i !== 0 && i !== str.length - 1) {
-        word += `${separator}${char.toLowerCase()}`;
+      let char = str[i]
+      if (char >= 'A' && char <= 'Z' && i !== 0 && i !== str.length - 1) {
+        word += `${separator}${char.toLowerCase()}`
       } else {
-        word += char.toLowerCase();
+        word += char.toLowerCase()
       }
     }
 
-    return word;
+    return word
   },
 
   /**
    * 身份证处理
    */
   setCardNo: (card: string) => {
-    if (!card) return "";
-    return card.replace(/^(.{4})(?:\d+)(.{4})$/, "$1******$2");
+    if (!card) return ''
+    return card.replace(/^(.{4})(?:\d+)(.{4})$/, '$1******$2')
   },
 
   /**
    * 手机号处理
    */
   setPhoneNo: (num: string) => {
-    if (!num) return "";
-    return num.replace(/^(.{3})(?:\d+)(.{4})$/, "$1****$2");
+    if (!num) return ''
+    return num.replace(/^(.{3})(?:\d+)(.{4})$/, '$1****$2')
   },
 
   /**
    * 年龄
    */
   setAge: (birthday: string) => {
-    if (!birthday) return "";
-    const currentYear = new Date().getFullYear();
-    const bir = birthday.split("-")[0];
-    if (!bir) return "";
-    const age = Number(currentYear) - Number(bir);
-    return age <= 0 ? 1 : age;
+    if (!birthday) return ''
+    const currentYear = new Date().getFullYear()
+    const bir = birthday.split('-')[0]
+    if (!bir) return ''
+    const age = Number(currentYear) - Number(bir)
+    return age <= 0 ? 1 : age
   },
 
   /**
    * 是否是 IOS
    */
   isIos: () => {
-    return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+    return !!navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
   },
 
   /**
    * 判断是否 Android
    */
   isAndroid: () => {
-    return (
-      navigator.userAgent.indexOf("Android") > -1 ||
-      navigator.userAgent.indexOf("Linux") > -1
-    );
+    return navigator.userAgent.indexOf('Android') > -1 || navigator.userAgent.indexOf('Linux') > -1
   },
-};
+}
 
-export default Utils;
+export default Utils

@@ -1,98 +1,201 @@
-const { WebpackCompiler } = require("@bale-tools/mutate-service");
-const MutateVersion = require("@bale-tools/mutate-version");
-const path = require("path");
-const webpack = require("webpack");
-const { VantResolver } = require("@vant/auto-import-resolver");
-const AutoImport = require("unplugin-auto-import/webpack");
-const ComponentsPlugin = require("unplugin-vue-components/webpack");
+/**
+ * @fileOverview frontend 项目打包
+ * @date 2023-04-12
+ * @author poohlaha
+ */
+const webpack = require('webpack')
+const { Paths, Utils } = require('@bale-tools/utils')
+const { WebpackCompiler, WebpackDllCompiler } = require('@bale-tools/mutate-service')
+const chalk = require('chalk')
+const fsExtra = require('fs-extra')
+const { performance } = require('node:perf_hooks')
+const path = require('node:path')
+const { VantResolver } = require('@vant/auto-import-resolver')
+const AutoImport = require('unplugin-auto-import/webpack')
+const ComponentsPlugin = require('unplugin-vue-components/webpack')
 
-const resolve = (dir) => path.join(__dirname, "../", dir);
-const command = process.argv || [];
-const cmds = command.filter((x) => !x.startsWith("--")) || [];
-const scripts = ["start", "build", "simulate", "prod"];
+const LoggerPrefix = chalk.cyan('[Bale Chat Compiler]:')
 
-// script
-function getScript(cmds = []) {
-  if (cmds.length === 0) return scripts[1]; // default dev
-  if (cmds.includes(scripts[0])) return scripts[0];
-  if (cmds.includes(scripts[1])) return scripts[1];
-  if (cmds.includes(scripts[2])) return scripts[2];
-  if (cmds.includes(scripts[3])) return scripts[3];
-  return scripts[1];
-}
+class ProjectBuilder {
+  _SCRIPTS = ['start', 'dev', 'simulate', 'prod'] // scripts
+  _script = ''
+  _appRootDir = ''
+  _dllDir = ''
+  _copyDir = ''
+  _projectUrl = ''
+  _args = []
+  _copyDestDir = ''
 
-// 获取 webpack 插件
-function getWebpackPlugins() {
-  const plugins = [];
+  constructor() {
+    this._args = process.argv.slice(2) || []
+    this._script = this._getScript()
+    this._projectUrl = this._getProjectUrl()
+    this._copyDestDir = 'mobile'
+    this._appRootDir = Paths.getAppRootDir() || ''
+    this._dllDir = path.join(this._appRootDir, '.vendor')
+    this._copyDir = path.resolve(this._appRootDir, 'node_modules', '@bale-sprint/react')
+  }
 
-  // 添加全局 http
-  plugins.push(
-    new webpack.ProvidePlugin({
-      $http: [resolve("src/communal/request/index.js"), "default"],
-    }),
-  );
+  _getProjectUrl() {
+    const commands = this._args.filter(x => x.startsWith('--projectUrl=')) || []
+    if (commands.length === 0) return ''
+    const command = commands[0] || ''
+    return command.replace('--projectUrl=', '')
+  }
 
-  plugins.push(
-    new webpack.DefinePlugin({
-      __VUE_OPTIONS_API__: JSON.stringify(true), // 是否启用选项式 API
-      __VUE_PROD_DEVTOOLS__: JSON.stringify(false), // 生产环境是否启用 devtools
-      __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false), // 生产环境是否启用不匹配详情
-    }),
-  );
+  _getScript() {
+    const commands = this._args.filter(x => !x.startsWith('--')) || []
+    if (commands.includes(this._SCRIPTS[0])) {
+      return this._SCRIPTS[0]
+    }
 
-  plugins.push(
-    AutoImport.default({
-      resolvers: [VantResolver()],
-    }),
-  );
+    if (commands.includes(this._SCRIPTS[2])) {
+      return this._SCRIPTS[2]
+    }
 
-  // 添加 vant4
-  plugins.push(
-    ComponentsPlugin.default({
-      resolvers: [VantResolver()],
-    }),
-  );
+    if (commands.includes(this._SCRIPTS[3])) {
+      return this._SCRIPTS[3]
+    }
 
-  return plugins;
-}
+    return this._SCRIPTS[1]
+  }
 
-function copyFiles() {
-  new MutateVersion({ language: "vue", babelImportPluginName: "" }).copy();
-}
+  // 获取 webpack 插件
+  _getWebpackPlugins() {
+    const plugins = []
 
-function compiler() {
-  WebpackCompiler({
-    script: getScript(cmds),
-    opts: {
-      entry: "./src/communal/app/index.ts",
-      plugins: getWebpackPlugins(),
-      externals: {},
-      alias: {
-        "vant/es": "vant/lib",
+    // 添加全局 http
+    plugins.push(
+      new webpack.ProvidePlugin({
+        $http: [path.resolve('src/communal/request/index.ts'), 'default'],
+      })
+    )
+
+    plugins.push(
+      new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: JSON.stringify(true), // 是否启用选项式 API
+        __VUE_PROD_DEVTOOLS__: JSON.stringify(false), // 生产环境是否启用 devtools
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false), // 生产环境是否启用不匹配详情
+      })
+    )
+
+    plugins.push(
+      AutoImport.default({
+        resolvers: [VantResolver()],
+      })
+    )
+
+    // 添加 vant4
+    plugins.push(
+      ComponentsPlugin.default({
+        resolvers: [VantResolver()],
+      })
+    )
+
+    return plugins
+  }
+
+  // build dll
+  _buildDll(needBuild = true) {
+    console.log(LoggerPrefix, `Starting ${chalk.cyan('build dll')} ...`)
+    const startTime = performance.now()
+
+    WebpackDllCompiler(this._script, {
+      entry: {
+        vendor: ['vue', 'vuex', 'vue-router'],
+        vant: ['vant', 'axios'],
+        other: ['crypto-js'],
       },
-      loaders: [],
-      settings: {
-        usePurgecssPlugin: false,
-        usePwaPlugin: false,
-        useMinimize: true,
-        experiments: false,
-        generateReport: false,
-        compress: {
-          enable: false,
-          deleteOutput: true,
-          suffix: ".zip",
+      output: {
+        path: this._dllDir,
+      },
+      done: () => {
+        const endTime = performance.now()
+        console.log(
+          LoggerPrefix,
+          `Finished ${chalk.cyan('build dll')} after ${chalk.magenta(`${endTime - startTime} ms`)}`
+        )
+        if (needBuild) this._build()
+      },
+    })
+  }
+
+  // build
+  _build() {
+    console.log(`${LoggerPrefix} Starting ${chalk.cyan('build')} ...`)
+    const startTime = performance.now()
+
+    const options = {
+      script: this._script,
+      opts: {
+        entry: path.resolve(this._appRootDir, 'src/communal/app/index.ts'),
+        plugins: this._getWebpackPlugins(),
+        alias: {
+          'vant/es': 'vant/lib',
         },
+        settings: {
+          usePurgecssPlugin: false,
+          usePwaPlugin: false,
+          useMinimize: true,
+          experiments: false,
+          generateReport: false,
+          useTerserWebpackPlugin: true,
+          providePlugin: {},
+          compress: {
+            enable: false,
+            deleteOutput: true,
+            suffix: '.zip',
+          },
+        },
+        clean: true,
       },
-    },
-    done: () => {
-      console.log("All Done.");
-    },
-  });
+      done: () => {
+        const endTime = performance.now()
+        // 删除根目录下的 .vendor 文件
+        fsExtra.removeSync(this._dllDir)
+        console.log(LoggerPrefix, `Finished ${chalk.cyan('build')} after ${chalk.magenta(`${endTime - startTime} ms`)}`)
+      },
+    }
+
+    if (this._script !== this._SCRIPTS[0]) {
+      // 读取 .vendor 目录下的 manifest 文件
+      const dllDir = this._dllDir
+      if (fsExtra.pathExistsSync(dllDir)) {
+        const files = (Paths.getFileList(dllDir) || []).filter(file => path.extname(file) === '.json')
+        const manifestList = files.map(file => file.replace('.json', ''))
+        options.opts.dllSettings = {
+          dllOutput: this._dllDir,
+          manifestList,
+        }
+
+        options.opts.clean = true
+      }
+    }
+
+    if (!Utils.isBlank(this._projectUrl)) {
+      options.opts.settings.definePlugin = {
+        PROJECT_URL: this._projectUrl,
+      }
+    }
+
+    WebpackCompiler(options)
+  }
+
+  // instance
+  instance() {
+    // 删除 webpack 缓存
+    const cacheDir = path.join(this._appRootDir, 'node_modules', '.cache')
+    if (fsExtra.pathExistsSync(cacheDir)) {
+      fsExtra.removeSync(cacheDir)
+    }
+
+    if (this._script === this._SCRIPTS[0]) {
+      // start
+      return this._build()
+    }
+
+    return this._buildDll()
+  }
 }
 
-function run() {
-  // copyFiles()
-  compiler();
-}
-
-run();
+module.exports = ProjectBuilder
