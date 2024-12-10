@@ -32,6 +32,14 @@ function getWebpackPlugins() {
       })
   )
 
+  plugins.push(
+      new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: JSON.stringify(true),  // 是否启用选项式 API
+        __VUE_PROD_DEVTOOLS__: JSON.stringify(false),  // 生产环境是否启用 devtools
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false),  // 生产环境是否启用不匹配详情
+      })
+  )
+
  plugins.push(
    AutoImport.default({
      resolvers: [VantResolver()],
