@@ -7,7 +7,7 @@
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 declare const $http: {
-  post: (options: { [K: string]: any }) => Promise<any>;
-  get: (options: { [K: string]: any }) => Promise<any>;
-  sendBatch: (options: { [K: string]: any }) => Promise<any>;
-};
+  post: (options: { [K: string]: any }) => Promise<any>
+  get: (options: { [K: string]: any }) => Promise<any>
+  sendBatch: (options: { [K: string]: any }) => Promise<any>
+}

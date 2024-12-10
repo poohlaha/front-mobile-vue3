@@ -1,7 +1,7 @@
 /**
  * Home Store
  */
-import { createStore } from "vuex";
+import { createStore } from 'vuex'
 // 定义 State 接口
 export interface State {}
 
@@ -11,6 +11,6 @@ const Home = createStore<State>({
   mutations: {},
   actions: {},
   getters: {},
-});
+})
 
-export default Home;
+export default Home

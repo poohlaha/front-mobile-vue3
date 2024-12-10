@@ -1,12 +1,12 @@
 {
-  "name": "vue3-cli",
+  "name": "front-mobile-vue3",
   "version": "0.0.0",
   "private": true,
-  "homepage": "https://github.com/poohlaha/front-mobile-vue.git",
+  "homepage": "https://github.com/poohlaha/front-mobile-vue3.git",
   "engines": {
     "node": ">=16.0.0"
   },
-  "description": "`Vue2` `手机` 端框架.",
+  "description": "`Vue3` `手机` 端框架.",
   "keywords": [
     "vue",
     "css",

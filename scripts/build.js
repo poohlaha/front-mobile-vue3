@@ -64,7 +64,7 @@ function compiler() {
       settings: {
         usePurgecssPlugin: false,
         usePwaPlugin: false,
-        useMinimize: false,
+        useMinimize: true,
         experiments: false,
         generateReport: false,
         compress: {
