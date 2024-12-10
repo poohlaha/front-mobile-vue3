@@ -52,6 +52,7 @@
   ```shell
   npm config set registry https://registry.npmjs.org
   ```
+
 - 安装
 
   ```shell
@@ -70,9 +71,9 @@
 
 - 打包
 
-    - 测试环境: `npm run dev`
-    - 仿真环境: `npm run simulate`
-    - 生产环境: `npm run pord`
+  - 测试环境: `npm run dev`
+  - 仿真环境: `npm run simulate`
+  - 生产环境: `npm run pord`
 
 4. 其他命令
 
@@ -147,16 +148,16 @@
 * html: 分段使用 `<!-- -->` 注明标签内容所代码的含义, 包括 `if` 判断。
 * 方法: 请使用如下格式, 注明方法的含义及参数的含义
 
-   ```javascript
-   /**
-      * 生成公共数据
-      * @param param1 param1的含义
-      * @param param2 param2的含义
-      * @param param3 param3的含义
-      ...
-      */
-   function xxx(param1, param2, param3) {}
-   ```
+  ```javascript
+  /**
+     * 生成公共数据
+     * @param param1 param1的含义
+     * @param param2 param2的含义
+     * @param param3 param3的含义
+     ...
+     */
+  function xxx(param1, param2, param3) {}
+  ```
 
 - 页面: 当页面行数大于 `1000` 行时, 请拆分页面。
 - 事件: 页面事件方法统一以 `on` 开头, 保存请使用 `onSave` 开头, 修改请使用 `onUpdate` 开头，删除请使用 `onDelete` 开头。

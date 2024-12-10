@@ -6,14 +6,14 @@
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-import { fetch, fetchAll, getErrorReason } from './axios'
-import { CONSTANT, SYSTEM } from '@configs/index'
-import Utils from '@utils/utils'
-import { setToken, Signature } from '@utils/sign'
-import axios from 'axios'
-import { COMMON, EXIT, PAGE_JUMP, TOAST } from '@utils/base'
-import type { RequestConstant, RequestOptions } from './constant'
-import { IdentEnum, MethodEnum, RequestTypeEnum } from './constant'
+import { fetch, fetchAll, getErrorReason } from "./axios";
+import { CONSTANT, SYSTEM } from "@configs/index";
+import Utils from "@utils/utils";
+import { setToken, Signature } from "@utils/sign";
+import axios from "axios";
+import { COMMON, EXIT, PAGE_JUMP, TOAST } from "@utils/base";
+import type { RequestConstant, RequestOptions } from "./constant";
+import { IdentEnum, MethodEnum, RequestTypeEnum } from "./constant";
 
 /**
  * 发送请求
@@ -35,17 +35,17 @@ import { IdentEnum, MethodEnum, RequestTypeEnum } from './constant'
  * }
  */
 export default class Request {
-  static BLOB = 'blob'
-  static SUCCESS_CODE = 200
-  static CONTENT_DISPOSITION = 'content-disposition'
-  static FILENAME = 'FILENAME'
-  static CONTENT_TYPE_NAME = 'content-type'
+  static BLOB = "blob";
+  static SUCCESS_CODE = 200;
+  static CONTENT_DISPOSITION = "content-disposition";
+  static FILENAME = "FILENAME";
+  static CONTENT_TYPE_NAME = "content-type";
 
   /**
    * 发送请求
    */
   static async send(config: RequestConstant) {
-    if (!config.url) return
+    if (!config.url) return;
 
     // config.url = `${process.env.API_ROOT}${config.url}`
 
@@ -53,68 +53,71 @@ export default class Request {
     // if (Request.judgeTokenExpire(config)) return;
 
     // upload
-    let requestType = Request.getRequestType(config)
+    let requestType = Request.getRequestType(config);
     if (requestType === RequestTypeEnum.UPLOAD || config.responseStream) {
-      config.responseType = Request.BLOB
+      config.responseType = Request.BLOB;
     }
 
-    return await Request.request(config)
+    return await Request.request(config);
   }
 
   /**
    * 获取请求数据, headers统一在axios过滤器中处理
    */
   static getRequestHeader(config: RequestConstant) {
-    let url = config.url || ''
+    let url = config.url || "";
 
     // 判断是否需要加密
-    let data: { [K: string]: any } | string = config.data || {}
+    let data: { [K: string]: any } | string = config.data || {};
 
     if (SYSTEM.NEED_ENCRYPT) {
-      data = Signature.encrypt(data)
+      data = Signature.encrypt(data);
     }
 
     return {
       method: config.method || MethodEnum.POST,
       url,
       data,
-      responseType: config.responseType || '',
+      responseType: config.responseType || "",
       baseURL: config.baseURL || process.env.API_ROOT,
       headers: config.headers || {},
-      type: config.type || 'json',
-    }
+      type: config.type || "json",
+    };
   }
 
   /**
    * 判断token是否过期
    */
   static judgeTokenExpire(config: RequestConstant) {
-    if (config.ident === undefined || config.ident === null) config.ident = IdentEnum.OTHER
-    if (config.ident !== IdentEnum.OTHER) return false
+    if (config.ident === undefined || config.ident === null)
+      config.ident = IdentEnum.OTHER;
+    if (config.ident !== IdentEnum.OTHER) return false;
 
-    let token = Utils.getLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
+    let token = Utils.getLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`);
     if (!token) {
       // 登录过期
-      PAGE_JUMP.toLoginPage(CONSTANT.TOKEN_EXPIRED_ERROR)
-      return true
+      PAGE_JUMP.toLoginPage(CONSTANT.TOKEN_EXPIRED_ERROR);
+      return true;
     }
 
-    return false
+    return false;
   }
 
   /**
    * 获取请求标识
    */
   static getRequestType(config: RequestConstant) {
-    if (!config) return RequestTypeEnum.REQUEST.toString()
-    return (config && config.requestType) || RequestTypeEnum.REQUEST.toString()
+    if (!config) return RequestTypeEnum.REQUEST.toString();
+    return (config && config.requestType) || RequestTypeEnum.REQUEST.toString();
   }
 
   /**
    * 请求数据
    */
   static async request(config: RequestConstant) {
-    let options: RequestOptions = Request.getRequestHeader(config) as RequestOptions
+    let options: RequestOptions = Request.getRequestHeader(
+      config,
+    ) as RequestOptions;
 
     // 显示Loading条
     if (Request.getRequestType(config) === RequestTypeEnum.REQUEST) {
@@ -123,210 +126,229 @@ export default class Request {
         type: 4,
         needTime: false,
         duration: 0,
-      }) // loading
+      }); // loading
     }
 
     try {
-      let res: any = await fetch(options)
+      let res: any = await fetch(options);
       if (res.status === Request.SUCCESS_CODE) {
-        return await Request.getResponseData(config, res)
+        return await Request.getResponseData(config, res);
       } else {
-        console.error(res)
-        return config.fail?.(res, config.params || {})
+        console.error(res);
+        return config.fail?.(res, config.params || {});
       }
     } catch (e: any) {
-      console.error(e)
+      console.error(e);
       if (config.showError !== false) {
-        TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 })
+        TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 });
       }
-      return config.fail?.(e, config.params || {})
+      return config.fail?.(e, config.params || {});
     }
   }
 
   /**
    * 获取返回数据
    */
-  static getResponseData(config: RequestConstant, res: { [K: string]: any } = {}) {
+  static getResponseData(
+    config: RequestConstant,
+    res: { [K: string]: any } = {},
+  ) {
     try {
       // 隐藏 loading 条
       if (Request.getRequestType(config) === RequestTypeEnum.REQUEST) {
-        TOAST.hide()
+        TOAST.hide();
       }
 
       if (!res.data) {
-        config.success?.({}, {}, config.params || {})
-        return
+        config.success?.({}, {}, config.params || {});
+        return;
       }
 
       // 返回流
       if (config.responseStream) {
         if (config.needDownload) {
-          Request.downloadFile(config, res)
-          return
+          Request.downloadFile(config, res);
+          return;
         } else {
-          return config.success?.(res.data || null, res, config.params || {})
+          return config.success?.(res.data || null, res, config.params || {});
         }
       }
 
-      let resData: any = null
+      let resData: any = null;
       if (Request.isString(res.data)) {
         try {
-          resData = JSON.parse(res.data)
+          resData = JSON.parse(res.data);
         } catch (e) {
-          resData = null
+          resData = null;
         }
       } else {
-        resData = res.data
+        resData = res.data;
       }
 
       if (!resData) {
-        console.info('没有返回数据')
+        console.info("没有返回数据");
         if (config.showError !== false) {
-          TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 })
+          TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 });
         }
-        config.fail?.({})
-        return
+        config.fail?.({});
+        return;
       }
 
       // failed
       if (resData.status !== null && resData.status !== undefined) {
-        if (Request.isString(resData.status) && resData.status.toLowerCase() !== CONSTANT.SUCCESS.toLowerCase()) {
-          let error: any = getErrorReason(res.data)
+        if (
+          Request.isString(resData.status) &&
+          resData.status.toLowerCase() !== CONSTANT.SUCCESS.toLowerCase()
+        ) {
+          let error: any = getErrorReason(res.data);
           // token 过期
-          if (error.code === '-999') {
-            PAGE_JUMP.toLoginPage(CONSTANT.TOKEN_EXPIRED_ERROR)
-            config.fail?.(error, config.params || {})
+          if (error.code === "-999") {
+            PAGE_JUMP.toLoginPage(CONSTANT.TOKEN_EXPIRED_ERROR);
+            config.fail?.(error, config.params || {});
           } else {
             if (config.showError !== false) {
-              TOAST.show({ message: error.reason, type: 3 })
+              TOAST.show({ message: error.reason, type: 3 });
             }
-            config.fail?.(error, config.params || {})
+            config.fail?.(error, config.params || {});
           }
-          return
+          return;
         } else {
           // 判断是否需要弹出自定义message
           if (config.params?.message) {
-            TOAST.show({ message: (config.params?.message || '') as string })
+            TOAST.show({ message: (config.params?.message || "") as string });
           }
         }
       }
 
       if (resData.code !== null && resData.code !== undefined) {
-        if (resData.code !== '0' && resData.code !== 0) {
+        if (resData.code !== "0" && resData.code !== 0) {
           // 判断 token 是否过期
           if (resData.code !== SYSTEM.TOKEN_EXPIRED_CODE) {
             TOAST.show({
-              message: Request.getResponseErrorMessage(resData).reason || CONSTANT.ERROR_MESSAGE,
+              message:
+                Request.getResponseErrorMessage(resData).reason ||
+                CONSTANT.ERROR_MESSAGE,
               type: 4,
-            })
+            });
           }
 
-          return config.fail?.(res.data || {})
+          return config.fail?.(res.data || {});
         }
       }
 
-      let data = resData.data || resData.result || {}
+      let data = resData.data || resData.result || {};
       // 判断是否是登录和登出, 如果是登录, 则保存token, 登出则清除localStorage
       if (config.ident === IdentEnum.LOGIN) {
         // 登录
-        setToken(res, config) // 保存token
+        setToken(res, config); // 保存token
       } else if (config.ident === IdentEnum.LOGOUT) {
         // 登出
-        EXIT.logout()
+        EXIT.logout();
       }
 
-      return config.success?.(data, resData, config.params || {})
+      return config.success?.(data, resData, config.params || {});
     } catch (res: any) {
       // 隐藏 loading 条
-      if (Request.getRequestType(config) === RequestTypeEnum.REQUEST.toString()) {
-        TOAST.hide()
+      if (
+        Request.getRequestType(config) === RequestTypeEnum.REQUEST.toString()
+      ) {
+        TOAST.hide();
       }
 
-      console.error(res)
+      console.error(res);
 
       // 超时
       if (res.errMsg) {
-        if (res.errMsg.toLowerCase().indexOf('timeout') !== -1) {
+        if (res.errMsg.toLowerCase().indexOf("timeout") !== -1) {
           if (config.showError !== false) {
-            TOAST.show({ message: CONSTANT.TIMEOUT_MESSAGE, type: 3 })
+            TOAST.show({ message: CONSTANT.TIMEOUT_MESSAGE, type: 3 });
           }
         }
       } else {
         if (config.showError !== false) {
           TOAST.show({
-            message: Request.getResponseErrorMessage(res.data).reason || CONSTANT.ERROR_MESSAGE,
+            message:
+              Request.getResponseErrorMessage(res.data).reason ||
+              CONSTANT.ERROR_MESSAGE,
             type: 3,
-          })
+          });
         }
       }
 
-      return config.fail?.(res)
+      return config.fail?.(res);
     }
   }
 
   /**
    * 文件下载
    */
-  static downloadFile = (config: RequestConstant, res: { [K: string]: any } = {}) => {
-    if (!res) return
-    const { contentType, fileName } = Request.getDownloadFileName(res)
-    console.log(contentType, fileName)
+  static downloadFile = (
+    config: RequestConstant,
+    res: { [K: string]: any } = {},
+  ) => {
+    if (!res) return;
+    const { contentType, fileName } = Request.getDownloadFileName(res);
+    console.log(contentType, fileName);
 
     try {
-      Request.export(res.data, contentType, fileName)
-      config.success?.({ code: 200 })
+      Request.export(res.data, contentType, fileName);
+      config.success?.({ code: 200 });
     } catch (e) {
-      console.log('文件下载失败')
-      config.success?.({ code: 500 })
+      console.log("文件下载失败");
+      config.success?.({ code: 500 });
     }
-  }
+  };
 
   /**
    * 获取文件下载的文件名
    */
   static getDownloadFileName(res: { [K: string]: any } = {}) {
-    let fileName: string = ''
-    let headers = res.headers || {}
-    let contentType = headers[Request.CONTENT_TYPE_NAME]
-    let contentDisposition = headers[Request.CONTENT_DISPOSITION]
-    if (!contentDisposition) return { contentType, fileName }
+    let fileName: string = "";
+    let headers = res.headers || {};
+    let contentType = headers[Request.CONTENT_TYPE_NAME];
+    let contentDisposition = headers[Request.CONTENT_DISPOSITION];
+    if (!contentDisposition) return { contentType, fileName };
 
-    let arr = contentDisposition.split(';')
-    if (arr.length === 0) return { contentType, fileName }
+    let arr = contentDisposition.split(";");
+    if (arr.length === 0) return { contentType, fileName };
 
     try {
       arr.forEach((item: any) => {
-        if (item && item.indexOf('=') !== -1 && item.toUpperCase().indexOf(Request.FILENAME) !== -1) {
-          let items = item.split('=')
-          fileName = items[items.length - 1]
+        if (
+          item &&
+          item.indexOf("=") !== -1 &&
+          item.toUpperCase().indexOf(Request.FILENAME) !== -1
+        ) {
+          let items = item.split("=");
+          fileName = items[items.length - 1];
         }
-      })
+      });
     } catch (e) {
-      fileName = ''
+      fileName = "";
     }
 
     return {
       contentType,
-      fileName: decodeURI(fileName).replace(/"/g, ''),
-    }
+      fileName: decodeURI(fileName).replace(/"/g, ""),
+    };
   }
 
   /**
    * 导出文件
    */
   static export(body: any, contentType: string, fileName: string) {
-    let blob = new Blob([body || ''], { type: contentType })
+    let blob = new Blob([body || ""], { type: contentType });
     // @ts-ignore
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
       // @ts-ignore
-      window.navigator.msSaveOrOpenBlob(blob, fileName)
+      window.navigator.msSaveOrOpenBlob(blob, fileName);
     } else {
-      let a = document.createElement('a')
-      a.href = URL.createObjectURL(blob)
-      a.download = fileName
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
+      let a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
     }
   }
 
@@ -334,34 +356,35 @@ export default class Request {
    * 获取返回错误信息
    */
   static getResponseErrorMessage(data: { [K: string]: any } = {}) {
-    let reason: string
-    let code: number
+    let reason: string;
+    let code: number;
     try {
       if (!data) {
         return {
           reason: CONSTANT.ERROR_MESSAGE,
           code: 500,
-        }
+        };
       }
 
-      let error = data.error
+      let error = data.error;
       if (error) {
-        if (Request.isString(error)) error = JSON.parse(error)
-        reason = error.reason || CONSTANT.ERROR_MESSAGE
-        code = error.code
+        if (Request.isString(error)) error = JSON.parse(error);
+        reason = error.reason || CONSTANT.ERROR_MESSAGE;
+        code = error.code;
       } else {
-        reason = data.reason || data.message || data.msg || CONSTANT.ERROR_MESSAGE
-        code = 500
+        reason =
+          data.reason || data.message || data.msg || CONSTANT.ERROR_MESSAGE;
+        code = 500;
       }
     } catch (e) {
-      reason = CONSTANT.ERROR_MESSAGE
-      code = 500
+      reason = CONSTANT.ERROR_MESSAGE;
+      code = 500;
     }
 
     return {
       reason: reason,
       code: code,
-    }
+    };
   }
 
   /**
@@ -369,8 +392,8 @@ export default class Request {
    * @param config
    */
   static get(config: RequestConstant) {
-    config.method = MethodEnum.GET
-    return Request.send(config)
+    config.method = MethodEnum.GET;
+    return Request.send(config);
   }
 
   /**
@@ -378,8 +401,8 @@ export default class Request {
    * @param config
    */
   static post(config: RequestConstant) {
-    config.method = MethodEnum.POST
-    return Request.send(config)
+    config.method = MethodEnum.POST;
+    return Request.send(config);
   }
 
   /**
@@ -387,8 +410,8 @@ export default class Request {
    * @param config
    */
   static put(config: RequestConstant) {
-    config.method = MethodEnum.PUT
-    return Request.send(config)
+    config.method = MethodEnum.PUT;
+    return Request.send(config);
   }
 
   /**
@@ -396,57 +419,57 @@ export default class Request {
    * @param config
    */
   static delete(config: RequestConstant) {
-    config.method = MethodEnum.DELETE
-    return Request.send(config)
+    config.method = MethodEnum.DELETE;
+    return Request.send(config);
   }
 
   /**
    * 多个请求
    */
   static async all(queue: Array<RequestConstant> = []) {
-    if (!queue || queue.length === 0) return
+    if (!queue || queue.length === 0) return;
 
-    let requests: Array<RequestOptions> = []
+    let requests: Array<RequestOptions> = [];
     queue.map((item: RequestConstant) => {
-      let request = Request.getRequestHeader(item)
+      let request = Request.getRequestHeader(item);
       if (request) {
         // @ts-ignore
-        requests.push(axios(request))
+        requests.push(axios(request));
       }
-    })
+    });
 
-    let response: any = await fetchAll(requests)
-    if (!response) return
+    let response: any = await fetchAll(requests);
+    if (!response) return;
 
-    let error = response.error // 是否有错误
-    let errors = response.errors || [] // 错误数组
-    let responses = response.responses || [] // 返回的请求数据数组
+    let error = response.error; // 是否有错误
+    let errors = response.errors || []; // 错误数组
+    let responses = response.responses || []; // 返回的请求数据数组
 
     // 有错误时提示错误
     if (error) {
       TOAST.show({
         message: errors.length > 0 ? errors[0].message : CONSTANT.ERROR_MESSAGE,
         type: 3,
-      })
-      return
+      });
+      return;
     }
 
     if (responses.length === 0 || responses.length !== queue.length) {
-      TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 })
-      return
+      TOAST.show({ message: CONSTANT.ERROR_MESSAGE, type: 3 });
+      return;
     }
 
     for (let i = 0; i < queue.length; i++) {
-      let request: { [K: string]: any } = queue[i]
-      let res = responses[i]
-      if (!res) continue
+      let request: { [K: string]: any } = queue[i];
+      let res = responses[i];
+      if (!res) continue;
 
       if (res.config.url !== request.url) {
-        res = Request.findResponseByUrl(request.url, responses)
+        res = Request.findResponseByUrl(request.url, responses);
       }
 
-      if (!res) continue
-      request.success && request.success(res.data, {}, request.params || {})
+      if (!res) continue;
+      request.success && request.success(res.data, {}, request.params || {});
     }
   }
 
@@ -454,20 +477,20 @@ export default class Request {
    * 根据url查找返回的Response
    */
   static findResponseByUrl = (url: string, responses: Array<any> = []) => {
-    if (!url || responses.length === 0) return null
+    if (!url || responses.length === 0) return null;
     for (let i = 0; i < responses.length; i++) {
-      let response: any = responses[i]
-      if (!responses || !response.config) continue
-      if (response.config.url === url) return response
+      let response: any = responses[i];
+      if (!responses || !response.config) continue;
+      if (response.config.url === url) return response;
     }
 
-    return null
-  }
+    return null;
+  };
 
   /**
    * 判断是不是string类型
    */
   static isString(str: any) {
-    return typeof str === 'string' && str.constructor === String
+    return typeof str === "string" && str.constructor === String;
   }
 }
