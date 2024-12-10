@@ -1,0 +1,14 @@
+public
+scripts
+!scripts/proxy.json
+src/assets/images/public
+src/assets/styles/common
+!src/assets/styles/common/main.less
+src/communal
+!src/communal/configs
+src/views/stores/index.js
+src/views/stores/base.js
+.env.dev
+.env.local
+.env.prod
+.env.simulate

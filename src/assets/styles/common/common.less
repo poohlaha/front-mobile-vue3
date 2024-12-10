@@ -1,0 +1,853 @@
+@marginCommon: 0.15rem;
+
+/* 1. 卡片 */
+/* 卡片式统一左右距离 */
+.card,
+.card-bg {
+  background-color: #fff;
+  margin: 0.4rem;
+  padding: 0.4rem;
+  position: relative;
+  font-size: @font;
+
+  &.card-no-bg {
+    background: unset !important;
+  }
+
+  &.card-radius {
+    border-radius: 0.25rem;
+    border: @border;
+  }
+
+  &.card-shadow {
+    box-shadow: 0 0.07rem 0.08rem 0 rgb(0 0 0 / 10%);
+  }
+
+  &.card-bottom-border {
+    border-bottom: @border;
+  }
+
+  /* 卡片上边的间距 */
+  .card-top-margin {
+    margin-top: 0.25rem;
+  }
+
+  /* 卡片下边的间距 */
+  .card-bottom-margin {
+    margin-bottom: 0.25rem;
+  }
+
+  /* 卡片左边的间距 */
+  .card-left-margin {
+    margin-left: 0.25rem;
+  }
+
+  /* 卡片右边的间距 */
+  .card-right-margin {
+    margin-right: 0.25rem;
+  }
+
+  /* 卡片上边的间距 */
+  .card-top-padding {
+    padding-top: 0.25rem;
+  }
+
+  /* 卡片下边的间距 */
+  .card-bottom-padding {
+    padding-bottom: 0.25rem;
+  }
+
+  /* 卡片左边的间距 */
+  .card-left-padding {
+    padding-left: 0.25rem;
+  }
+
+  /* 卡片右边的间距 */
+  .card-right-padding {
+    padding-right: 0.25rem;
+  }
+
+  /* 卡片不需要 margin */
+  &.card-no-margin {
+    margin: 0 !important;
+  }
+
+  /* 卡片不需要上部 margin */
+  &.card-no-top-margin {
+    margin-top: 0 !important;
+  }
+
+  /* 卡片不需要下部 margin */
+  &.card-no-bottom-margin {
+    margin-bottom: 0 !important;
+  }
+
+  /* 卡片不需要左部 margin */
+  &.card-no-left-margin {
+    margin-left: 0 !important;
+  }
+
+  /* 卡片不需要右部 margin */
+  &.card-no-right-margin {
+    margin-right: 0 !important;
+  }
+
+  /* 卡片不需要左右 margin */
+  &.card-no-margin-lr {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  /* 卡片不需要上下 margin */
+  &.card-no-margin-tb {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* 卡片不需要 padding */
+  &.card-no-padding {
+    padding: 0 !important;
+  }
+
+  /* 卡片不需要上部 padding */
+  &.card-no-top-padding {
+    padding-top: 0 !important;
+  }
+
+  /* 卡片不需要左部 padding */
+  &.card-no-left-padding {
+    padding-left: 0 !important;
+  }
+
+  /* 卡片不需要右部 padding */
+  &.card-no-right-padding {
+    padding-right: 0 !important;
+  }
+
+  /* 卡片不需要下部 padding */
+  &.card-no-bottom-padding {
+    padding-bottom: 0 !important;
+  }
+
+  /* 卡片不需要左右 padding */
+  &.card-no-padding-lr {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* 卡片不需要上下 padding */
+  &.card-no-padding-tb {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  /* 首先缩进 */
+  .card-indent {
+    text-indent: 0.7rem;
+  }
+
+  /* 卡片标题 */
+  .card-title {
+    font-size: @font_large;
+
+    /* 卡片标题图标 */
+    .card-title-icon {
+      width: 0.8rem;
+      height: 0.8rem;
+      margin-right: 0.2rem;
+    }
+
+    .svg-icon {
+      width: 0.5rem;
+      height: 0.5rem;
+      margin-right: 0.2rem;
+    }
+
+    i.iconfont {
+      font-size: 0.5rem;
+      margin-right: 0.25rem;
+    }
+  }
+
+  /* 卡片正常文字 */
+  .card-normal-text {
+    font-size: @font;
+  }
+
+  /* 卡片 Tag */
+  .card-tag {
+    background: #f4f7fc;
+    padding: 0.15rem 0.5rem;
+    border-radius: 0.5rem;
+    color: #6a6d7d;
+    font-size: @font_small;
+    margin-right: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
+
+  /* 卡片左侧带文字、点和竖线条 */
+  .card-text-line {
+    // color: @theme!important;
+    font-size: @font_smaller;
+    margin-right: 0.25rem;
+
+    .card-line-top {
+      margin-top: 0.25rem;
+    }
+
+    .card-text-line-min-height {
+      min-height: 1rem;
+
+      .text-line {
+        position: relative;
+        top: 0.45rem;
+      }
+    }
+
+    .text-content {
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
+    }
+
+    .card-desc {
+      font-size: @font_smaller!important;
+      margin-right: 0.2rem;
+      width: 1.2rem;
+      min-width: 1.2rem;
+    }
+
+    .card-desc-theme {
+      color: @theme!important;
+    }
+
+    .time-tag {
+      height: 0.7rem;
+      border-radius: 0.05rem;
+      padding: 0.5rem 0.15rem;
+      font-size: @font_smallest;
+      margin-right: 0.25rem;
+      margin-left: 0.25rem;
+
+      .svg-icon {
+        width: 0.3rem;
+        height: 0.3rem;
+        margin-right: 0.15rem;
+      }
+    }
+  }
+
+  .card-line {
+    position: relative;
+    width: 0.01rem;
+    height: 100%;
+    border: 0.01rem dashed #f4f7fc;
+  }
+
+  /* 小圆点: 主题色 */
+  .card-dot,
+  .card-dot-gray {
+    width: 0.15rem;
+    height: 0.15rem;
+    background: @theme;
+    border-radius: 50%;
+    position: relative;
+  }
+
+  /* 小圆点: 灰色 */
+  .card-dot-gray {
+    background: @gray!important;
+  }
+
+  .card-over,
+  .card-playback {
+    color: #6a6d7d;
+    background: #f4f7fc;
+
+    .svg-icon {
+      path {
+        fill: #6a6d7d;
+      }
+    }
+  }
+
+  .card-living {
+    color: @theme;
+    background: #feefee;
+
+    .svg-icon {
+      path {
+        fill: @theme;
+      }
+    }
+  }
+
+  .card-advance {
+    color: #3e7ed9;
+    background: #ebf2fb;
+
+    .svg-icon {
+      path {
+        fill: #3e7ed9;
+      }
+    }
+  }
+
+  /* 卡片状态 */
+  .card-status {
+    font-size: @font_small;
+    color: @status;
+  }
+
+  /* 卡片状态小 */
+  .card-desc-status {
+    font-size: @font_smaller;
+    color: @status;
+  }
+
+  /* 卡片描述 */
+  .card-desc {
+    font-size: @font_smaller;
+    color: @gray;
+  }
+
+  /* 卡片普通文字 */
+  .card-text {
+    font-size: @font_small;
+  }
+
+  /* 最浅灰色 */
+  .card-gray {
+    font-size: @font_smaller;
+    color: @general_gray_light;
+  }
+
+  /* 卡片分割符 */
+  .separator {
+    margin: 0 0.15rem;
+  }
+
+  /* 角落丝带 */
+  .card-cloth {
+    width: 2rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 2;
+    overflow: hidden;
+    white-space: nowrap;
+
+    span {
+      display: block;
+      color: @white;
+      width: 2.5rem;
+      line-height: 0.6rem;
+      position: absolute;
+      overflow: hidden;
+      background: @status;
+      transform: rotate(45deg);
+      font-size: @font_small;
+      padding: 0.08rem;
+      text-align: center;
+      text-decoration: none;
+      top: 0.1rem;
+      right: -0.75rem;
+    }
+
+    /* 灰色 */
+    &.gray {
+      span {
+        background: @disabled!important;
+      }
+    }
+  }
+
+  /* 右侧图标 */
+  .card-right-icon {
+    width: 1rem;
+    height: 1rem;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  /* 卡片footer */
+  .card-footer {
+    margin-top: 0.3rem;
+    border-top: @border;
+    padding-top: 0.25rem;
+    color: @general_gray_light;
+
+    .card-desc {
+      color: @general_gray_light!important;
+    }
+  }
+}
+
+/* 带主题色背景的卡片 */
+.card-bg {
+  background: linear-gradient(0deg, @theme_to 0%, @white 100%);
+}
+
+/* 带灰色背景的卡片 */
+.card-gray-bg {
+  background: linear-gradient(0deg, @disabled 0%, @white 100%);
+}
+
+/* 2. 线条 */
+/* 左侧线条 */
+.border-left {
+  border-left: @border;
+}
+
+/* 右侧线条 */
+.border-right {
+  border-right: @border;
+}
+
+/* 顶部线条 */
+.border-top {
+  border-top: @border;
+}
+
+/* 底部线条 */
+.border-bottom {
+  border-bottom: @border;
+}
+
+/* 3. 按钮 */
+/* 普通类 button */
+.buttons {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.3rem;
+
+  button {
+    color: @deep_gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: @font!important;
+    border: @border;
+  }
+
+  /* 按钮占满容器 */
+  &.fill {
+    button,
+    .button-dashed {
+      flex: 1;
+    }
+  }
+
+  /* 按钮固定 */
+  &.fixed {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    padding-bottom: 0.7rem;
+    background: @white;
+  }
+
+  /* 主题色按钮、取消按钮、虚线按钮 */
+  .btn-default,
+  .btn-cancel,
+  .button-dashed,
+  .svg-button {
+    height: 1.2rem;
+    // line-height: 1rem;
+    width: 100%;
+  }
+
+  /* 虚线边框，需要用svg实现, rx ry: 圆角: <svg className="svg-button"><rect rx="10" ry="10" height="100%" width="100%" /></svg> */
+  .button-dashed {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      right: 0;
+      width: 100%;
+
+      rect {
+        fill: transparent;
+        stroke: #dfdfdf;
+        stroke-width: 0.07rem;
+        stroke-dasharray: 10;
+      }
+    }
+
+    .text {
+      font-family: @font_PingFangSC_Medium;
+      font-size: @font_large!important;
+      color: @deep_gray;
+    }
+  }
+
+  /* 圆角 */
+  button.radius,
+  .button.radius {
+    border-radius: 1rem;
+  }
+
+  /* 不可用 */
+  button.disabled,
+  .button.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  button:not(:last-child) {
+    margin-right: 0.3rem;
+  }
+}
+
+/* 详情类 button */
+.button-detail {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: @theme;
+  border: 0.03rem solid @theme;
+  box-shadow: 0 0.07rem 0.08rem 0 @theme_shadow;
+  padding: 0.02rem 0.4rem;
+  border-radius: 0.5rem;
+  color: @white;
+  text-align: center;
+  font-size: @font_smaller;
+  height: 0.6rem;
+  min-width: 1.6rem;
+
+  /* 空, 不加背景 */
+  &.plan {
+    background: transparent !important;
+    color: @theme;
+    box-shadow: none !important;
+  }
+
+  i {
+    font-size: @font_smaller;
+    margin-right: 0.2rem;
+  }
+
+  .svg-icon {
+    margin-right: 0.2rem;
+    width: 0.35rem;
+    height: 0.35rem;
+    fill: @white;
+  }
+
+  &.gray {
+    background: #ffffff !important;
+    color: @general_gray_light!important;
+    border-color: @general_gray_light!important;
+    box-shadow: none !important;
+
+    .svg-icon {
+      fill: @general_gray_light!important;
+    }
+  }
+}
+
+/* 主题类按钮 */
+.btn-default {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: @theme;
+  border-radius: 0.15rem;
+
+  &.plan {
+    background: #ffffff !important;
+    color: @theme!important;
+    border: @borderTheme;
+  }
+}
+
+/* 全灰按钮 */
+.button-gay {
+  border-color: @border_gray!important;
+  color: @gray!important;
+  background: @border_gray;
+  box-shadow: none;
+}
+
+/* list item中的button */
+.list-item-button {
+  display: flex;
+  height: 100%;
+  color: @color_gray;
+  align-items: center;
+  font-size: @font_small;
+
+  .divider {
+    width: 0.02rem;
+    height: 0.45rem;
+    background: @border_gray;
+    margin-right: 0.3rem;
+  }
+}
+
+/* 4. 字体 */
+/* 字体加粗 */
+.font-bold {
+  font-family: @font_PingFangSC_Bold;
+  font-weight: bold;
+}
+
+.font-500 {
+  font-family: @font_PingFangSC_Bold;
+  font-weight: 500;
+}
+
+/* 字体中等 */
+.font-medium {
+  font-family: @font_PingFangSC_Medium;
+}
+
+/* 5. 页面设置 */
+/* 默认页面设置 */
+div[class$="-page"],
+.m-page {
+  // min-height: 100%;
+  // height: 100%;
+  font-size: @font;
+}
+
+/* 页面背景 */
+.page-bg {
+  background: @background!important;
+}
+
+/* 页面主题背景 */
+.page-bg-theme {
+  background: @theme!important;
+}
+
+/* 页面 padding */
+.page-padding {
+  padding: 0.35rem;
+}
+
+/* 页面 距顶部 margin */
+.page-top-margin {
+  margin-top: 0.25rem;
+}
+
+/* 页面为白色背景 */
+.page-white,
+.bg-white {
+  background: @white;
+}
+
+/* 页面背景, 从深主题色到背景色 */
+.page-bg-liner {
+  background: linear-gradient(180deg, @theme 0%, @background 100%);
+}
+
+.page-no-overflow {
+  overflow: hidden;
+}
+
+/* 6. 公共部分 */
+/* 主题色 */
+.theme-color {
+  color: @theme!important;
+}
+
+/* 全局 svg 设置 */
+.svg-icon {
+  width: 0.4rem;
+  height: 0.4rem;
+  fill: currentColor;
+}
+
+/* 状态 */
+.status {
+  color: @status;
+  font-size: @font_smaller;
+  font-weight: 400;
+}
+
+/* 描述 */
+.desc {
+  font-size: @font_smaller;
+  color: @general_gray_light;
+}
+
+/* 删除线 */
+.del-line {
+  text-decoration: line-through;
+  color: @general_gray_light;
+}
+
+/* 页面公用margin*/
+.margin-left {
+  margin-left: @marginCommon;
+}
+
+.margin-right {
+  margin-right: @marginCommon;
+}
+
+.margin-top {
+  margin-top: @marginCommon;
+}
+
+.margin-bottom {
+  margin-bottom: @marginCommon;
+}
+
+/* 列表没有数据 */
+.no-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+
+  img {
+    width: 5rem;
+    height: 3.4rem;
+  }
+
+  p {
+    margin-top: 0.3rem;
+    color: @gray;
+    font-size: @font_small;
+  }
+
+  .red {
+    color: @theme;
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+}
+
+/* 7. 其他 */
+/* 标题前面的 | 线 */
+.title-line {
+  border-left: 0.1rem solid @theme;
+  text-indent: 0.25rem;
+}
+
+/* 两列表间的距离 */
+.list-item-top {
+  margin-top: 0.25rem;
+}
+
+/* 标题和全部 */
+.list-item {
+  padding: 0.4rem;
+  margin-top: 0.3rem;
+
+  .all {
+    font-size: @font_smaller;
+    color: @general_gray;
+
+    .svg-icon {
+      margin-left: 0.03rem;
+    }
+  }
+}
+
+/* tips 提示 */
+.tips {
+  padding: 0.4rem;
+
+  &.tips-bg {
+    background: #f5f5f5;
+    border-radius: 0.25rem;
+  }
+
+  .title {
+    font-size: @font_small;
+    font-family: @font_PingFangSC_Bold;
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+  }
+
+  .title:not(:first-child) {
+    margin-top: 0.5rem;
+  }
+
+  p:not(.title) {
+    font-family: @font_PingFangSC_Medium;
+    font-size: @font_smaller;
+    color: @general_gray;
+    margin-top: 0.2rem;
+  }
+}
+
+/* 通知 */
+.notice {
+  font-size: @font_smaller;
+  color: @theme;
+
+  .notice-icon {
+    margin-right: 0.15rem;
+    margin-top: 0.03em;
+  }
+}
+
+/* 遮罩层 */
+.mark {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 10;
+}
+
+/* 订阅 */
+.subscribe {
+  background: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border-radius: 0.5rem 0 0 0.5rem;
+  font-size: @font_smallest;
+  top: 0.25rem;
+  right: 0;
+  padding: 0.05rem 0.15rem;
+}
+
+/* v-viewer */
+.viewer-container {
+  .viewer-navbar {
+    height: 1.5rem;
+
+    .viewer-list {
+      height: 100%;
+      width: auto !important;
+      transform: translateX(3rem) !important;
+
+      li {
+        width: 2rem;
+        height: 100%;
+
+        img {
+          height: 100%;
+          width: 1rem;
+        }
+      }
+    }
+  }
+
+  .viewer-close {
+    display: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    top: -0.5rem;
+    right: -0.5rem;
+  }
+}

@@ -1,0 +1,9 @@
+# 前端路由, 需要按模块分
+LOGIN_URL = '/login'
+
+[HOME] # 首页
+HOME_URL = '/home'
+HOME_TITLE = '首页'
+
+
+

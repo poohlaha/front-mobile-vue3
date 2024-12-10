@@ -1,0 +1,431 @@
+/**
+  重置 vant 样式
+ */
+.van-title-gray {
+  .van-cell__title,
+  .van-field__label {
+    color: @color_gray!important;
+  }
+}
+
+.van-field__control {
+  color: @color!important;
+  font-family: @font_PingFangSC_Medium;
+  font-weight: 500;
+}
+
+// cell
+.van-cell {
+  padding: 0.15rem 0.3rem;
+  font-size: @font!important;
+  line-height: @font!important;
+  min-height: 1.4rem;
+  justify-content: center;
+
+  &::after {
+    border-bottom-color: @border_gray!important;
+  }
+
+  &.cell-link {
+    align-items: center;
+  }
+
+  .van-cell__title,
+  .van-field__label {
+    display: flex;
+    align-items: center;
+    color: @color;
+  }
+
+  .van-icon-arrow {
+    font-size: 0.4rem !important;
+  }
+
+  .van-field__left-icon {
+    margin-right: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .van-cell__value {
+    flex: 1;
+
+    .van-field__body,
+    input {
+      height: 100%;
+      caret-color: @theme;
+    }
+
+    .van-field__body {
+      .van-field__clear {
+        display: none;
+        height: 100%;
+        // display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 !important;
+        padding: 0;
+        width: 0.6rem;
+      }
+    }
+
+    .van-field__button {
+      height: 100%;
+    }
+  }
+
+  .svg-box {
+    .svg-icon {
+      width: 0.5rem;
+      height: 0.5rem;
+    }
+  }
+}
+
+// button
+.van-button {
+  // theme
+  &.van-button--primary {
+    border: @borderTheme;
+    color: @theme;
+    border-radius: 0.1rem;
+  }
+}
+
+// checkbox
+.van-checkbox {
+  .van-checkbox__icon {
+    font-size: 0.4rem;
+
+    &.van-checkbox__icon--checked .van-icon {
+      background-color: @theme;
+      border-color: @theme;
+    }
+  }
+}
+
+// icon
+.van-icon {
+  font-size: 0.5rem;
+}
+
+// dialog
+.van-dialog {
+  width: 8rem;
+  border-radius: 0.2rem;
+
+  .van-dialog__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 1.5rem;
+    font-size: @font_larger;
+    padding: 0.3rem 0.4rem;
+    font-family: @font_PingFangSC_Medium;
+    line-height: 0.8rem;
+  }
+
+  .van-dialog__content {
+    padding: 0.3rem 0.4rem;
+    max-height: 10rem;
+    font-size: @font;
+    overflow: auto;
+
+    .van-dialog__message {
+      font-size: @font;
+      line-height: unset;
+      padding: 0;
+    }
+
+    .dialog-indent {
+      text-indent: 0.7rem;
+    }
+  }
+
+  .van-dialog__footer {
+    &.van-hairline--top:after {
+      border-top-width: 0 !important;
+    }
+
+    .van-button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 2rem;
+      font-size: @font;
+
+      &.van-dialog__confirm {
+        color: @theme;
+
+        .van-button__content {
+          background: @theme;
+          color: #fff;
+        }
+      }
+
+      &.van-dialog__cancel {
+        .van-button__content {
+          color: @theme;
+          border: 0.03rem solid @theme;
+        }
+      }
+    }
+
+    .van-button__content {
+      height: 1rem;
+      border-radius: 1rem;
+      flex: 1;
+      margin: 0.35rem;
+    }
+  }
+}
+
+// tabs
+.van-tabs {
+  .van-tabs__wrap {
+    height: 1.2rem;
+    border-bottom: @border;
+
+    .van-tabs__nav {
+      padding-bottom: 0.15rem;
+
+      .van-tab {
+        font-size: @font;
+
+        .van-tab__text {
+          line-height: 1rem;
+          color: @gray;
+        }
+
+        &.van-tab--active {
+          .van-tab__text {
+            color: @color;
+            font-family: @font_PingFangSC_Medium;
+          }
+        }
+      }
+
+      .van-tabs__line {
+        width: 0.8rem;
+        height: 0.08rem;
+        bottom: 0.15rem;
+        background-color: @theme;
+      }
+    }
+  }
+
+  &.van-tabs--card {
+    .van-tabs__nav--card {
+      height: 100%;
+      padding-bottom: 0 !important;
+      border-color: #e3ebf3 !important;
+      margin: 0 !important;
+    }
+
+    .van-tab {
+      border-color: #e3ebf3 !important;
+
+      &.van-tab--active {
+        background-color: #f4f7fc !important;
+      }
+    }
+  }
+}
+
+// switch
+.van-switch {
+  width: 1.2rem;
+  height: 0.6rem;
+  font-size: @font_larger;
+  background-color: #d2d7e3;
+  border-color: #d2d7e3;
+
+  .van-switch__node {
+    width: 0.5rem;
+    height: 0.5rem;
+    top: 0.04rem;
+    left: 0.05rem;
+  }
+
+  &.van-switch--on {
+    background: @theme;
+    border-color: @theme;
+
+    .van-switch__node {
+      transform: translateX(0.6rem);
+    }
+  }
+}
+
+// swipe
+.van-swipe {
+  height: 2.2rem;
+
+  .van-swipe__indicators {
+    bottom: 0.15rem;
+
+    .van-swipe__indicator--active {
+      background-color: @theme!important;
+    }
+
+    .van-swipe__indicator {
+      width: 0.2rem;
+      height: 0.2rem;
+      background: @general_gray;
+    }
+  }
+}
+
+// .van-search
+.van-search {
+  height: 0.8rem;
+  padding: 0;
+
+  .van-search__content {
+    padding-left: 0.15rem;
+    border-radius: 0.15rem;
+    height: 100%;
+
+    .van-cell {
+      padding: 0 0.15rem 0 0.15rem;
+      min-height: unset !important;
+
+      .van-icon-search {
+        font-size: @font;
+      }
+    }
+  }
+
+  .van-search__action {
+    font-size: @font_small;
+    margin: 0 0 0 0.25rem;
+    color: @theme;
+    padding: 0;
+  }
+}
+
+// toast
+.van-toast {
+  padding: 0.3rem 0.4rem;
+
+  .van-toast__text {
+    font-size: @font_small;
+    white-space: nowrap;
+  }
+
+  &.van-toast--loading,
+  &.van-toast--fail {
+    width: auto !important;
+
+    .van-toast__text {
+      margin-top: 0.25rem;
+    }
+  }
+}
+
+// circle
+.van-circle {
+  .van-circle__text {
+    font-size: @font;
+    font-weight: 500;
+  }
+
+  svg {
+    path {
+      stroke-width: 1rem !important;
+    }
+  }
+}
+
+// van-pull-refresh
+.van-pull-refresh {
+  flex: 1;
+  display: flex;
+
+  .van-pull-refresh__head {
+    height: 1rem;
+    font-size: @font_smaller;
+  }
+
+  .van-pull-refresh__track {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+// van-list__loading
+.van-list__loading {
+  background: #ffffff;
+  font-size: @font_smaller;
+  line-height: 1rem;
+}
+
+.van-list__finished-text {
+  background: #ffffff;
+  font-size: @font_smaller;
+  line-height: 1rem;
+}
+
+.van-pull-refresh,
+.van-list__loading {
+  .van-loading {
+    .van-loading__spinner {
+      width: 0.4rem !important;
+      height: 0.4rem !important;
+    }
+
+    .van-loading__text {
+      font-size: @font_smaller;
+    }
+  }
+}
+
+// image preview
+.van-image-preview {
+  .van-swipe {
+    height: 100% !important;
+  }
+
+  .van-image-preview__index {
+    font-size: @font_small!important;
+    line-height: 0.2rem !important;
+    text-shadow: 0.01rem 0.01rem #323233;
+    top: 0.4rem !important;
+  }
+}
+
+/* input placeholder 样式 */
+input::-webkit-input-placeholder {
+  /* 使用webkit内核的浏览器 */
+  font-size: @font!important;
+  font-family: @font_PingFangSC_Regular!important;
+  font-weight: normal !important;
+  color: @gray!important;
+}
+
+input:-moz-placeholder {
+  /* Firefox版本4-18 */
+  font-size: @font!important;
+  font-family: @font_PingFangSC_Regular!important;
+  font-weight: normal !important;
+  color: @gray!important;
+}
+
+input::-moz-placeholder {
+  /* Firefox版本19+ */
+  font-size: @font!important;
+  font-family: @font_PingFangSC_Regular!important;
+  font-weight: normal !important;
+  color: @gray!important;
+}
+
+input:-ms-input-placeholder {
+  /* IE浏览器 */
+  font-size: @font!important;
+  font-family: @font_PingFangSC_Regular!important;
+  font-weight: normal !important;
+  color: @gray!important;
+}

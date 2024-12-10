@@ -1,0 +1,84 @@
+//全局定义
+@font: 0.41rem;
+@font_small: 0.38rem;
+@font_smaller: 0.35rem;
+@font_smallest: 0.32rem;
+@font_large: 0.45rem;
+@font_larger: 0.5rem;
+@font_larger_much: 0.6rem;
+@font_largest: 0.75rem;
+
+//主题颜色
+@background: #f1f3f6; // 背景色
+@theme: #ff5541; // 默认主题色
+@theme_to: #ffaaa0; // 橙色选中高亮
+@theme_shadow: rgba(254, 104, 89, 0.5); // 主题色阴影
+@theme_black: #272b2e; // 黑
+
+//常用颜色
+@black: #000000; // 白底的须知
+@white: #ffffff; // 白色底或文字
+@disabled: #d3d2d1; // 失效颜色
+@color: #2f313c;
+@gray: #aaacb8;
+@color_gray: #797b85;
+@general_gray_light: #999999; // 正常灰色字体，多用于值的显示
+@general_gray: #666666; // 正常灰色字体，多用于值的显示
+@deep_gray: #333333; // 深灰色字体，多用于表单页面的参数名和标题
+@white_gray: #f8f8f8; //页面最底层灰色背景
+@divider: #dcdcdc;
+@gold: #c18c60; // 金色
+@border: 1px solid @border_gray;
+@border_gray: #f1f3f6; // border #d2d7e3
+@borderTheme: 1px solid @theme;
+@mask: rgba(0, 0, 0, 0.5); // 遮罩层颜色
+@status: @theme; // 状态
+
+// 常用字体
+@font_PingFangSC_Regular: PingFang-SC-Regular;
+@font_PingFangSC_Bold: PingFang-SC-Bold;
+@font_PingFangSC:
+  PingFangSC-Regular,
+  PingFang SC;
+@font_PingFangSC_Medium: PingFang-SC-Medium;
+
+// 将变量传进去
+.theme(
+  @font,
+  @font_small,
+  @font_smaller,
+  @font_smallest,
+  @font_large,
+  @font_larger,
+  @font_larger_much,
+  @font_largest,
+
+  @background,
+  @theme,
+  @theme_to,
+  @theme_shadow,
+  @theme_black,
+
+  @black,
+  @white,
+  @disabled,
+  @color,
+  @gray,
+  @color_gray,
+  @general_gray_light,
+  @general_gray,
+  @deep_gray,
+  @white_gray,
+  @border_gray,
+  @divider,
+  @gold,
+  @border,
+  @borderTheme,
+  @mask,
+  @status,
+
+  @font_PingFangSC_Regular,
+  @font_PingFangSC_Bold,
+  @font_PingFangSC,
+  @font_PingFangSC_Medium
+);

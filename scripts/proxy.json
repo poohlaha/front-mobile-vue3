@@ -1,0 +1,1 @@
+{  "/api": {    "target": "https://apitest.mshasia.com/unify-api/",    "ws": true,    "changeOrigin": true,    "pathRewrite": {      "/api": ""    }  }}
