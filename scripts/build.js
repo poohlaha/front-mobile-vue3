@@ -103,8 +103,8 @@ class ProjectBuilder {
     WebpackDllCompiler(this._script, {
       entry: {
         vendor: ['vue', 'vuex', 'vue-router'],
-        vant: ['vant', 'axios'],
-        other: ['crypto-js'],
+        vant: ['axios'],
+        // other: ['crypto-js'],
       },
       output: {
         path: this._dllDir,

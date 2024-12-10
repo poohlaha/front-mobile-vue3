@@ -1,6 +1,10 @@
 /**
   重置 vant 样式
  */
+.van-button--normal {
+  font-size: @font;
+}
+
 .van-title-gray {
   .van-cell__title,
   .van-field__label {
@@ -88,7 +92,8 @@
   // theme
   &.van-button--primary {
     border: @borderTheme;
-    color: @theme;
+    color: #ffffff;
+    background: @theme;
     border-radius: 0.1rem;
   }
 }

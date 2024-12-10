@@ -3,6 +3,7 @@ import { createApp } from 'vue'
 import App from './index.vue'
 import router from '../../route'
 
+import 'lib-flexible'
 import '@assets/styles/skin/index.less'
 import store from '@stores/index'
 
