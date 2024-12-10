@@ -13,5 +13,4 @@ app.use(store)
 // 注册 router
 app.use(router)
 
-
 app.mount('#app')
