@@ -103,7 +103,7 @@ class ProjectBuilder {
     WebpackDllCompiler(this._script, {
       entry: {
         vendor: ['vue', 'vuex', 'vue-router'],
-        vant: ['axios'],
+        axios: ['axios'],
         // other: ['crypto-js'],
       },
       output: {
@@ -138,7 +138,7 @@ class ProjectBuilder {
           usePwaPlugin: false,
           useMinimize: true,
           experiments: false,
-          generateReport: false,
+          generateReport: true,
           useTerserWebpackPlugin: true,
           providePlugin: {},
           compress: {

@@ -39,7 +39,7 @@
     "core-js": "^3.8.3",
     "@bale-tools/mutate-minimize": "^1.0.6",
     "@bale-tools/mutate-service": "^2.3.2",
-    "@bale-tools/mutate-version": "^2.2.4",
+    "@bale-tools/mutate-version": "^2.2.6",
     "@bale-tools/utils": "^2.0.7",
     "@babel/eslint-parser": "^7.25.9",
     "@commitlint/cli": "^19.6.0",
