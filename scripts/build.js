@@ -13,6 +13,7 @@ const path = require('node:path')
 const { VantResolver } = require('@vant/auto-import-resolver')
 const AutoImport = require('unplugin-auto-import/webpack')
 const ComponentsPlugin = require('unplugin-vue-components/webpack')
+const { VueLoaderPlugin } = require('vue-loader')
 
 const LoggerPrefix = chalk.cyan('[Bale Chat Compiler]:')
 
@@ -79,6 +80,9 @@ class ProjectBuilder {
       })
     )
 
+    // 添加 vue-loader
+    plugins.push(new VueLoaderPlugin())
+
     plugins.push(
       AutoImport.default({
         resolvers: [VantResolver()],
@@ -128,6 +132,7 @@ class ProjectBuilder {
     const options = {
       script: this._script,
       opts: {
+        languages: ['vue'],
         entry: path.resolve(this._appRootDir, 'src/communal/app/index.ts'),
         plugins: this._getWebpackPlugins(),
         alias: {
