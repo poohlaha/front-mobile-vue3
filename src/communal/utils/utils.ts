@@ -1,5 +1,4 @@
-import CryptoJS from 'crypto-js'
-
+import { encode, decode } from 'js-base64'
 const Utils = {
   /**
    * 从localStorage中设置值
@@ -113,7 +112,7 @@ const Utils = {
    */
   encrypt: (str: any): string => {
     if (!str) return ''
-    return CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(str))
+    return encode(str)
   },
 
   /**
@@ -121,7 +120,7 @@ const Utils = {
    */
   decrypt: (str: any): string => {
     if (!str) return ''
-    return CryptoJS.enc.Base64.parse(str).toString(CryptoJS.enc.Utf8)
+    return decode(str)
   },
 
   /**

@@ -1,48 +1,10 @@
-import CryptoJS from 'crypto-js'
-import { CONSTANT, SYSTEM } from '@config/index'
+import { CONSTANT, SYSTEM } from '@configs/index'
 import Utils from './utils'
 
 /**
  * 签名
  */
-const Signature = {
-  /**
-   * 生成签名
-   */
-  sign: (headers: any = {}) => {
-    const timestamp = new Date().getTime() // 时间戳
-    const nonce = Math.random() + ''
-    const echoStr = Utils.generateUUID().toString().replace('-', '')
-    headers['timestamp'] = timestamp
-    headers['nonce'] = nonce
-    headers['echoStr'] = echoStr
-    headers['sophia_superficial'] = CryptoJS.HmacSHA1(timestamp + nonce + echoStr, SYSTEM.SIGNATURE.SIGNATURE_KEY)
-  },
-
-  /**
-   * AES加密
-   */
-  encrypt: (data: any, publicKey = SYSTEM.SIGNATURE.PUBLIC_KEY, iv = SYSTEM.SIGNATURE.CBCIV) => {
-    if (typeof data !== 'string') data = JSON.stringify(data)
-    return CryptoJS.AES.encrypt(CryptoJS.enc.Utf8.parse(data), CryptoJS.enc.Utf8.parse(publicKey), {
-      iv: CryptoJS.enc.Utf8.parse(iv),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    }).toString()
-  },
-
-  /**
-   * AES解密
-   */
-  decrypt: (data: any, publicKey = SYSTEM.SIGNATURE.PUBLIC_KEY, iv = SYSTEM.SIGNATURE.CBCIV) => {
-    let decrypt = CryptoJS.AES.decrypt(data, CryptoJS.enc.Utf8.parse(publicKey), {
-      iv: CryptoJS.enc.Utf8.parse(iv),
-      mode: CryptoJS.mode.CBC,
-      padding: CryptoJS.pad.Pkcs7,
-    })
-    return CryptoJS.enc.Utf8.stringify(decrypt).toString()
-  },
-}
+const Signature = {}
 
 /**
  * 设置请求头
@@ -73,10 +35,6 @@ const setHeaders = (config: any = {}) => {
     headers[CONSTANT.REQUEST.CONTENT_TYPE_NAME] = type
   }
 
-  // 是否需要签名
-  if (SYSTEM.NEED_SIGN) {
-    Signature.sign(headers)
-  }
   return headers
 }
 
