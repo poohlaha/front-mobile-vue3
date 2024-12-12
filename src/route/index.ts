@@ -1,8 +1,7 @@
 import routes from './router'
-import { createRouter, createWebHistory } from 'vue-router'
 
-const router = createRouter({
-  history: createWebHistory(process.env.VUE_APP_PUBLIC_URL),
+const router = window.VueRouter.createRouter({
+  history: window.VueRouter.createWebHistory(process.env.VUE_APP_PUBLIC_URL),
   routes,
 })
 

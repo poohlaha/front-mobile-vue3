@@ -2,23 +2,15 @@
  * Common Store
  */
 import { CONSTANT } from '@configs/index'
-import { Module } from 'vuex'
+import { defineStore } from 'pinia'
 
-export interface State {
-  language: string
-  skin: string
-}
-
-// 创建 Store
-const Common: Module<State, any> = {
-  namespaced: true,
-  state: {
+const useCommonStore = defineStore('commonStore', {
+  state: () => ({
     language: CONSTANT.LANGUAGES[0], // 默认中文
     skin: CONSTANT.SKINS[0], // 默认orange
-  },
-  mutations: {},
-  actions: {},
+  }),
   getters: {},
-}
+  actions: {},
+})
 
-export default Common
+export default useCommonStore

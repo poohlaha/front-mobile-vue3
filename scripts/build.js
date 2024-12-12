@@ -83,6 +83,7 @@ class ProjectBuilder {
     // 添加 vue-loader
     plugins.push(new VueLoaderPlugin())
 
+    /*
     plugins.push(
       AutoImport.default({
         resolvers: [VantResolver()],
@@ -95,6 +96,7 @@ class ProjectBuilder {
         resolvers: [VantResolver()],
       })
     )
+     */
 
     return plugins
   }
@@ -106,7 +108,7 @@ class ProjectBuilder {
 
     WebpackDllCompiler(this._script, {
       entry: {
-        vendor: ['vue', 'vuex', 'vue-router'],
+        //vendor: ['vue', 'vue-router'],
         axios: ['axios'],
         // other: ['crypto-js'],
       },
@@ -135,15 +137,22 @@ class ProjectBuilder {
         languages: ['vue'],
         entry: path.resolve(this._appRootDir, 'src/communal/app/index.ts'),
         plugins: this._getWebpackPlugins(),
+        externals: {
+          vue: 'Vue',
+          'vue-router': 'VueRouter',
+          vant: 'vant',
+        },
+        /* // 自动注入 vant4 需要引入
         alias: {
           'vant/es': 'vant/lib',
         },
+         */
         settings: {
           usePurgecssPlugin: false,
           usePwaPlugin: false,
           useMinimize: true,
           experiments: false,
-          generateReport: true,
+          generateReport: false,
           useTerserWebpackPlugin: true,
           providePlugin: {},
           compress: {
@@ -158,6 +167,17 @@ class ProjectBuilder {
         const endTime = performance.now()
         // 删除根目录下的 .vendor 文件
         fsExtra.removeSync(this._dllDir)
+
+        // 根据环境删除 vue 文件
+        if (this._script === this._SCRIPTS[1]) {
+          fsExtra.removeSync(path.join(this._appRootDir, 'build', 'vue.min.js'))
+        }
+
+        if (this._script === this._SCRIPTS[2] || this._SCRIPTS[3]) {
+          fsExtra.removeSync(path.join(this._appRootDir, 'dist', 'vue.development.js'))
+          fsExtra.removeSync(path.join(this._appRootDir, 'dist', 'vue.development.js.gz'))
+        }
+
         console.log(LoggerPrefix, `Finished ${chalk.cyan('build')} after ${chalk.magenta(`${endTime - startTime} ms`)}`)
       },
     }

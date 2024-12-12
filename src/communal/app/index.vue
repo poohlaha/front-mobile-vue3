@@ -8,31 +8,28 @@
 </template>
 
 <script lang="ts">
-import { useRouter, useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { storeToRefs } from 'pinia'
+import { useCommonStore } from '@stores/index'
+
 export default {
   name: 'App',
-  computed: {
-    route() {
-      return useRoute()
-    },
-  },
+  computed: {},
   setup() {
-    const store = useStore()
     return {
-      store,
       keepAlive: false,
     }
   },
   async mounted() {
-    console.log('mounted')
-    const router = useRouter()
-    const route = useRoute()
+    const router = window.VueRouter.useRouter()
+    const route = window.VueRouter.useRoute()
 
     await router.isReady() // 等待路由准备就绪
     this.keepAlive = route.meta?.keepAlive || false
     console.log('keepAlive:', this.keepAlive)
-    document.body.classList.add(this.store.state.commonStore.skin)
+
+    const commonStore = useCommonStore()
+    const { skin } = storeToRefs(commonStore)
+    document.body.classList.add(skin.value || '')
   },
 }
 </script>

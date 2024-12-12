@@ -1,13 +1,7 @@
 /**
  * 导出所有Store
  */
-import homeStore from './home'
-import commonStore from './common'
-import { createStore } from 'vuex'
+import useHomeStore from './home'
+import useCommonStore from './common'
 
-export default createStore({
-  modules: {
-    homeStore,
-    commonStore,
-  },
-})
+export { useHomeStore, useCommonStore }

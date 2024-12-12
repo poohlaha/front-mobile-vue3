@@ -164,3 +164,7 @@
 - 第三方 `npm` 包: 当第三方包过大时, 请通过在 `index.html` 中直接引入, `index.html` 中 `process.env.NODE_ENV` 表示获取环境, 可以动态引入不同环境的包。
 
 - ps: 请勿到处拷贝代码, 如一块代码多块使用, 可以提取为公共的方法或公共模块或公共组件。
+
+8. 文档
+   pinia: https://pinia.vuejs.org/zh/introduction.html
+   vant: https://vant-ui.github.io/vant/#/zh-CN

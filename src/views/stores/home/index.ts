@@ -1,18 +1,13 @@
 /**
  * Home Store
  */
-import { Module } from 'vuex'
-
-// 定义 State 接口
-export interface State {}
+import { defineStore } from 'pinia'
 
 // 创建 Store
-const Home: Module<State, any> = {
-  namespaced: true,
-  state: {},
-  mutations: {},
-  actions: {},
+const useHomeStore = defineStore('homeStore', {
+  state: () => ({}),
   getters: {},
-}
+  actions: {},
+})
 
-export default Home
+export default useHomeStore

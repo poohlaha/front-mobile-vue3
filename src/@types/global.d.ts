@@ -6,6 +6,8 @@
 //   /!\ DO NOT MODIFY THIS FILE /!\
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+declare global {}
+
 declare const $http: {
   post: (options: { [K: string]: any }) => Promise<any>
   get: (options: { [K: string]: any }) => Promise<any>
