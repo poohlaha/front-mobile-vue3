@@ -68,7 +68,7 @@ class ProjectBuilder {
     // 添加全局 http
     plugins.push(
       new webpack.ProvidePlugin({
-        $http: [path.resolve('src/communal/request/index.ts'), 'default'],
+        $http: [path.resolve('src/communal/request/index.ts'), 'default']
       })
     )
 
@@ -76,7 +76,7 @@ class ProjectBuilder {
       new webpack.DefinePlugin({
         __VUE_OPTIONS_API__: JSON.stringify(true), // 是否启用选项式 API
         __VUE_PROD_DEVTOOLS__: JSON.stringify(false), // 生产环境是否启用 devtools
-        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false), // 生产环境是否启用不匹配详情
+        __VUE_PROD_HYDRATION_MISMATCH_DETAILS__: JSON.stringify(false) // 生产环境是否启用不匹配详情
       })
     )
 
@@ -109,11 +109,11 @@ class ProjectBuilder {
     WebpackDllCompiler(this._script, {
       entry: {
         //vendor: ['vue', 'vue-router'],
-        axios: ['axios'],
+        axios: ['axios']
         // other: ['crypto-js'],
       },
       output: {
-        path: this._dllDir,
+        path: this._dllDir
       },
       done: () => {
         const endTime = performance.now()
@@ -122,7 +122,7 @@ class ProjectBuilder {
           `Finished ${chalk.cyan('build dll')} after ${chalk.magenta(`${endTime - startTime} ms`)}`
         )
         if (needBuild) this._build()
-      },
+      }
     })
   }
 
@@ -140,7 +140,7 @@ class ProjectBuilder {
         externals: {
           vue: 'Vue',
           'vue-router': 'VueRouter',
-          vant: 'vant',
+          vant: 'vant'
         },
         /* // 自动注入 vant4 需要引入
         alias: {
@@ -158,10 +158,10 @@ class ProjectBuilder {
           compress: {
             enable: false,
             deleteOutput: true,
-            suffix: '.zip',
-          },
+            suffix: '.zip'
+          }
         },
-        clean: true,
+        clean: true
       },
       done: () => {
         const endTime = performance.now()
@@ -179,7 +179,7 @@ class ProjectBuilder {
         }
 
         console.log(LoggerPrefix, `Finished ${chalk.cyan('build')} after ${chalk.magenta(`${endTime - startTime} ms`)}`)
-      },
+      }
     }
 
     if (this._script !== this._SCRIPTS[0]) {
@@ -190,7 +190,7 @@ class ProjectBuilder {
         const manifestList = files.map(file => file.replace('.json', ''))
         options.opts.dllSettings = {
           dllOutput: this._dllDir,
-          manifestList,
+          manifestList
         }
 
         options.opts.clean = true
@@ -199,7 +199,7 @@ class ProjectBuilder {
 
     if (!Utils.isBlank(this._projectUrl)) {
       options.opts.settings.definePlugin = {
-        PROJECT_URL: this._projectUrl,
+        PROJECT_URL: this._projectUrl
       }
     }
 

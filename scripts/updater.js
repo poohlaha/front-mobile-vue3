@@ -285,8 +285,8 @@ class Updater {
           type: 'confirm',
           name: 'needHand',
           message: '是否直接覆盖?',
-          default: false, // default to help in order to avoid clicking straight through
-        },
+          default: false // default to help in order to avoid clicking straight through
+        }
       ])
       .then((result = {}) => {
         console.log(result.needHand)

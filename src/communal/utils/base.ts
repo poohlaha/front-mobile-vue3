@@ -11,7 +11,7 @@ const EXIT = {
   exit: (props: any) => {
     setTimeout(() => {
       props.history.push({
-        pathname: RouterUrls.LOGIN_URL,
+        pathname: RouterUrls.LOGIN_URL
       })
     }, 300)
   },
@@ -24,7 +24,7 @@ const EXIT = {
   logout: (text = '', redirectUrl = '') => {
     STORAGE.clearUserInfo()
     PAGE_JUMP.toLoginPage({ text, redirectUrl })
-  },
+  }
 }
 
 // 存储相关
@@ -48,7 +48,7 @@ const STORAGE = {
   clear: () => {
     Utils.clearLocalStorage()
     Utils.clearSessionStorage()
-  },
+  }
 }
 
 // 页面跳转相关
@@ -127,7 +127,7 @@ const PAGE_JUMP = {
     // 删除Token
     Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
     Utils.clearSessionStorage()
-  },
+  }
 }
 
 // 地址栏相关
@@ -145,7 +145,7 @@ const ADDRESS = {
       if (addresses.length === 2) {
         return {
           beforeAddressUrl: addresses[0] + projectUrl,
-          addressUrl: addresses[1],
+          addressUrl: addresses[1]
         }
       }
     }
@@ -161,7 +161,7 @@ const ADDRESS = {
       console.log('beforeAddressUrl:', address)
       return {
         addressUrl: '',
-        beforeAddressUrl: address,
+        beforeAddressUrl: address
       }
     }
 
@@ -194,7 +194,7 @@ const ADDRESS = {
       addressUrl,
       beforeAddressUrl,
       param,
-      params: ADDRESS.getUrlString(param),
+      params: ADDRESS.getUrlString(param)
     }
   },
 
@@ -244,7 +244,7 @@ const ADDRESS = {
       let otherParams = getQueryParams(prefixUrl)
       return {
         ...obj,
-        ...otherParams,
+        ...otherParams
       }
     }
 
@@ -264,7 +264,7 @@ const ADDRESS = {
     let r = decodeURI(after).match(reg)
     if (!r) return null
     return r[2]
-  },
+  }
 }
 
 // 用户相关
@@ -290,12 +290,12 @@ const USER = {
     const phoneInfo = {
       token: userInfo.loginToken || '',
       account: userInfo.mobile || '',
-      show: userInfo.mobileShow || '',
+      show: userInfo.mobileShow || ''
     }
     const accountInfo = {
       token: userInfo.fundAccountToken || '',
       account: userInfo.fundAccount || '',
-      show: userInfo.fundAccountShow || '',
+      show: userInfo.fundAccountShow || ''
     }
     Utils.setLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`, JSON.stringify({ phoneInfo, accountInfo }))
 
@@ -325,7 +325,7 @@ const USER = {
       USER.setOpenId(openId)
     }
     return openId
-  },
+  }
 }
 
 // Toast
@@ -349,7 +349,7 @@ const TOAST = {
     maskClickable = true,
     className = '',
     onClose = () => {},
-    onOpened = () => {},
+    onOpened = () => {}
   }) => {
     const getToast = () => {
       if (type === 2) {
@@ -361,7 +361,7 @@ const TOAST = {
           duration,
           className,
           onClose: () => onClose?.(),
-          onOpened: () => onOpened?.(),
+          onOpened: () => onOpened?.()
         })
       } else if (type === 3) {
         // 失败
@@ -372,7 +372,7 @@ const TOAST = {
           duration,
           className,
           onClose: () => onClose?.(),
-          onOpened: () => onOpened?.(),
+          onOpened: () => onOpened?.()
         })
       } else if (type === 4) {
         // loading
@@ -384,7 +384,7 @@ const TOAST = {
           duration,
           className,
           onClose: () => onClose?.(),
-          onOpened: () => onOpened?.(),
+          onOpened: () => onOpened?.()
         })
       } else {
         showToast({
@@ -394,7 +394,7 @@ const TOAST = {
           duration,
           className,
           onClose: () => onClose?.(),
-          onOpened: () => onOpened?.(),
+          onOpened: () => onOpened?.()
         })
       }
     }
@@ -407,7 +407,7 @@ const TOAST = {
    */
   hide() {
     TOAST.hide()
-  },
+  }
 }
 
 // 公共模块相关

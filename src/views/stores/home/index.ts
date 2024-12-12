@@ -7,7 +7,7 @@ import { defineStore } from 'pinia'
 const useHomeStore = defineStore('homeStore', {
   state: () => ({}),
   getters: {},
-  actions: {},
+  actions: {}
 })
 
 export default useHomeStore

@@ -66,7 +66,7 @@ export function getErrorReason(data: { [K: string]: any } = {}) {
 
   return {
     reason: reason,
-    code: code,
+    code: code
   }
 }
 
@@ -90,7 +90,7 @@ export function fetchAll(requests: Array<RequestOptions>) {
             if (response.status !== 200) {
               errors.push({
                 code: 500,
-                message: CONSTANT.ERROR_MESSAGE,
+                message: CONSTANT.ERROR_MESSAGE
               })
               break
             }
@@ -98,7 +98,7 @@ export function fetchAll(requests: Array<RequestOptions>) {
             if (!response.data || response.data.success !== 'true') {
               errors.push({
                 code: 500,
-                message: getErrorReason(response.data || {}),
+                message: getErrorReason(response.data || {})
               })
               break
             }
@@ -110,11 +110,11 @@ export function fetchAll(requests: Array<RequestOptions>) {
             errors.length > 0
               ? {
                   error: true,
-                  errors,
+                  errors
                 }
               : {
                   error: false,
-                  responses,
+                  responses
                 }
           )
         })
@@ -126,9 +126,9 @@ export function fetchAll(requests: Array<RequestOptions>) {
           errors: [
             {
               code: 500,
-              message: CONSTANT.ERROR_MESSAGE,
-            },
-          ],
+              message: CONSTANT.ERROR_MESSAGE
+            }
+          ]
         })
       })
   })

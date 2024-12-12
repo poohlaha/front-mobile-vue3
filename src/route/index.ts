@@ -2,7 +2,7 @@ import routes from './router'
 
 const router = window.VueRouter.createRouter({
   history: window.VueRouter.createWebHistory(process.env.VUE_APP_PUBLIC_URL),
-  routes,
+  routes
 })
 
 // 解决app路由模块无法加载的问题

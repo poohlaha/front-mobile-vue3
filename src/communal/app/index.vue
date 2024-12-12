@@ -16,7 +16,7 @@ export default {
   computed: {},
   setup() {
     return {
-      keepAlive: false,
+      keepAlive: false
     }
   },
   async mounted() {
@@ -30,6 +30,6 @@ export default {
     const commonStore = useCommonStore()
     const { skin } = storeToRefs(commonStore)
     document.body.classList.add(skin.value || '')
-  },
+  }
 }
 </script>
