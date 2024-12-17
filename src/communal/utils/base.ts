@@ -1,7 +1,7 @@
 import Utils from '@utils/utils'
 import { CONSTANT, SYSTEM } from '@configs/index'
 import { RouterUrls } from '@route/urls'
-import { showToast, Toast } from 'vant'
+import { showToast } from 'vant'
 
 // 退出相关
 const EXIT = {

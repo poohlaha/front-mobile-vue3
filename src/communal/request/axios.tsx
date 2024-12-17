@@ -71,7 +71,7 @@ export function getErrorReason(data: { [K: string]: any } = {}) {
 }
 
 export function fetchAll(requests: Array<RequestOptions>) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     axios
       .all(requests)
       .then(
@@ -119,7 +119,7 @@ export function fetchAll(requests: Array<RequestOptions>) {
           )
         })
       )
-      .catch((error: any) => {
+      .catch(() => {
         // reject(error)
         resolve({
           error: true,

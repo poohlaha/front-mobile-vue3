@@ -16,7 +16,7 @@ router.onError(error => {
 })
 
 // 添加标题
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   const title = to.meta?.title
   if (title) {
     // @ts-ignore

@@ -41,7 +41,7 @@ const setHeaders = (config: any = {}) => {
 /**
  * 设置token
  */
-const setToken = (response: any, config: any = {}) => {
+const setToken = (response: any) => {
   let headers = response.headers
   if (!headers) return
 

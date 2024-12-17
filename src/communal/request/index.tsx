@@ -9,9 +9,9 @@
 import { fetch, fetchAll, getErrorReason } from './axios'
 import { CONSTANT, SYSTEM } from '@configs/index'
 import Utils from '@utils/utils'
-import { setToken, Signature } from '@utils/sign'
+import { setToken } from '@utils/sign'
 import axios from 'axios'
-import { COMMON, EXIT, PAGE_JUMP, TOAST } from '@utils/base'
+import { EXIT, PAGE_JUMP, TOAST } from '@utils/base'
 import type { RequestConstant, RequestOptions } from './constant'
 import { IdentEnum, MethodEnum, RequestTypeEnum } from './constant'
 
