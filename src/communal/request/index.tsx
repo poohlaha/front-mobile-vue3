@@ -69,11 +69,6 @@ export default class Request {
 
     // 判断是否需要加密
     let data: { [K: string]: any } | string = config.data || {}
-
-    if (SYSTEM.NEED_ENCRYPT) {
-      data = Signature.encrypt(data)
-    }
-
     return {
       method: config.method || MethodEnum.POST,
       url,
