@@ -106,7 +106,7 @@ class Builder {
 
   // build
   _build() {
-    this._copyFiles()
+    // this._copyFiles()
     this._projectBuilder.instance()
   }
 

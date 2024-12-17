@@ -10,10 +10,8 @@ const chalk = require('chalk')
 const fsExtra = require('fs-extra')
 const { performance } = require('node:perf_hooks')
 const path = require('node:path')
-const { VantResolver } = require('@vant/auto-import-resolver')
-const AutoImport = require('unplugin-auto-import/webpack')
-const ComponentsPlugin = require('unplugin-vue-components/webpack')
 const { VueLoaderPlugin } = require('vue-loader')
+const UselessFile = require('useless-files-webpack5-plugin')
 
 const LoggerPrefix = chalk.cyan('[Bale Chat Compiler]:')
 
@@ -97,6 +95,14 @@ class ProjectBuilder {
       })
     )
      */
+
+    new UselessFile({
+      webpack: '5',
+      root: path.join(this._appRootDir, 'src'),
+      out: path.join(this._appRootDir, 'unusedFile.json'),
+      clean: false,
+      exclude: /node_modules/
+    })
 
     return plugins
   }
