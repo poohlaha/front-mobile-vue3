@@ -15,6 +15,7 @@
   "author": "poohlaha",
   "license": "MIT/Apache-2.0",
   "scripts": {
+    "prepare": "husky install",
     "copy": "node ./scripts/index.js copy",
     "start": "node ./scripts/index.js start",
     "build": "node ./scripts/index.js dev",

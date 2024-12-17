@@ -26,6 +26,7 @@ yarn.lock
 package-lock.json
 yarn-debug.log*
 yarn-error.log*
+.husky
 
 # ignore
 src/.cache

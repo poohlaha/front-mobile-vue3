@@ -24,7 +24,7 @@
 │   │   ├── request                                  // axios目录
 │   │   └── utils                                    // 公共utils目录
 │   │── route                                        // 路由文件存放目录
-│   │── views                                        // 站点页面存放目录
+│   │── views                                        // 页面存放目录
 │   │   ├── components                               // 自定义组件目录
 │   │   ├── modules                                  // 自定义业务组件目录
 │   │   ├── pages                                    // 页面目录
