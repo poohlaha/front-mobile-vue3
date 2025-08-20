@@ -1,5 +1,5 @@
 <template>
-  <div id="app-wrapper" class="h100">
+  <div id="app-wrapper color" class="h100">
     <keep-alive v-if="keepAlive">
       <router-view class="keep-alive" :key="$route.fullPath"></router-view>
     </keep-alive>
@@ -30,8 +30,7 @@ export default {
     const commonStore = useCommonStore()
     const { skin } = storeToRefs(commonStore)
     document.body.classList.add(skin.value || '')
-    document.body.classList.add('color')
-    document.body.classList.add('font-sm')
+    document.body.classList.add('text-sm')
   }
 }
 </script>
