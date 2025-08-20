@@ -20,7 +20,6 @@ class ProjectBuilder {
   _script = ''
   _appRootDir = ''
   _dllDir = ''
-  _copyDir = ''
   _projectUrl = ''
   _args = []
   _copyDestDir = ''
@@ -32,7 +31,6 @@ class ProjectBuilder {
     this._copyDestDir = 'mobile'
     this._appRootDir = Paths.getAppRootDir() || ''
     this._dllDir = path.join(this._appRootDir, '.vendor')
-    this._copyDir = path.resolve(this._appRootDir, 'node_modules', '@bale-sprint/react')
   }
 
   _getProjectUrl() {

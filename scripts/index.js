@@ -17,7 +17,6 @@ class Builder {
   _appRootDir = ''
   _packageDir = ''
   _configurationsDir = ''
-  _copyDir = ''
   _pcDestDir = ''
   _mobileDestDir = ''
   _mutateVersion
@@ -31,7 +30,6 @@ class Builder {
     this._appRootDir = Paths.getAppRootDir() || ''
     this._packageDir = path.join(this._appRootDir, 'packages')
     this._configurationsDir = path.join(this._appRootDir, 'configurations')
-    this._copyDir = path.resolve(this._appRootDir, 'node_modules', '@bale-sprint/react')
     this._args = process.argv.slice(2) || []
     this._command = this._getCommand()
     this._script = this._getScript()
