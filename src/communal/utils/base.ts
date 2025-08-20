@@ -1,7 +1,6 @@
 import Utils from '@utils/utils'
 import { CONSTANT, SYSTEM } from '@configs/index'
 import { RouterUrls } from '@route/urls'
-import { showToast } from 'vant'
 
 // 退出相关
 const EXIT = {
@@ -354,7 +353,7 @@ const TOAST = {
     const getToast = () => {
       if (type === 2) {
         // 成功
-        showToast({
+        window.vant.showToast({
           type: 'success',
           message,
           forbidClick: maskClickable,
@@ -365,7 +364,7 @@ const TOAST = {
         })
       } else if (type === 3) {
         // 失败
-        showToast({
+        window.vant.showToast({
           type: 'fail',
           message,
           forbidClick: maskClickable,
@@ -376,7 +375,7 @@ const TOAST = {
         })
       } else if (type === 4) {
         // loading
-        showToast({
+        window.vant.showToast({
           type: 'loading',
           message: message || CONSTANT.LOADING,
           forbidClick: maskClickable,
@@ -387,7 +386,7 @@ const TOAST = {
           onOpened: () => onOpened?.()
         })
       } else {
-        showToast({
+        window.vant.showToast({
           type: 'html',
           message,
           forbidClick: maskClickable,

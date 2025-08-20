@@ -2,8 +2,8 @@ import App from './index.vue'
 import router from '../../route'
 import { createPinia } from 'pinia'
 
-import 'lib-flexible'
 import '@assets/styles/skin/index.less'
+import '@assets/styles/common/tailwind.css'
 
 const app = window.Vue.createApp(App)
 

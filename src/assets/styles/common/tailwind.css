@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .page-padding {
+    @apply p-4;
+  }
+}
+
+@layer components {
+  .van-icon {
+    @apply text-sm;
+  }
+
+  .van-cell {
+    @apply p-2 h-12;
+  }
+
+  .van-cell .van-icon-arrow {
+    @apply text-sm;
+  }
+
+  .van-cell .van-cell__left-icon {
+    @apply mr-2;
+  }
+}
+
+@layer components {
+  .van-toast {
+    @apply pt-2 pb-2 pl-6 pr-6;
+  }
+}
+
+@layer components {
+  .van-field .van-cell__title {
+    @apply w-16;
+  }
+
+  .van-field .van-field__left-icon {
+    @apply mr-2 text-sm;
+  }
+
+  .van-field .van-field__button {
+    @apply pl-2;
+  }
+}
+
+@layer components {
+  .van-checkbox .van-checkbox__icon {
+    @apply w-4 h-4;
+  }
+
+  .van-checkbox .van-checkbox__icon .van-icon {
+    @apply text-sm;
+  }
+}
+
+@layer components {
+  .van-dialog {
+    @apply rounded-md w-72;
+  }
+
+  .van-dialog .van-dialog__header {
+    @apply p-4 text-base font-bold;
+  }
+
+  .van-dialog .van-dialog__header .close-icon {
+    @apply w-4 h-4;
+  }
+
+  .van-dialog .van-dialog__content {
+    @apply max-h-96 pt-1 pb-4 pr-4 pl-4;
+  }
+
+  .van-dialog .van-dialog__footer {
+    @apply p-4;
+  }
+
+  .van-dialog .van-dialog__footer .van-button {
+    @apply h-8;
+  }
+
+  .van-dialog .van-dialog__footer .van-button:not(:last-child) {
+    @apply mr-4;
+  }
+
+  .van-dialog .van-dialog__footer .van-button .van-button__content {
+    @apply rounded-full;
+  }
+}
+
+@layer components {
+  .van-tabs .van-tabs__wrap {
+    @apply h-10;
+  }
+
+  .van-tabs .van-tab .van-tab__text {
+    @apply text-base;
+  }
+
+  .van-tabs .van-tab {
+    @apply pl-1 pr-1;
+  }
+  .van-tabs .van-tabs__line {
+    @apply h-1 w-8;
+  }
+}
+
+@layer components {
+  .van-switch {
+    @apply w-8 h-2;
+  }
+}

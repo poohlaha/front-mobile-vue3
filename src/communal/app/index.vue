@@ -30,6 +30,8 @@ export default {
     const commonStore = useCommonStore()
     const { skin } = storeToRefs(commonStore)
     document.body.classList.add(skin.value || '')
+    document.body.classList.add('color')
+    document.body.classList.add('font-sm')
   }
 }
 </script>

@@ -42,7 +42,6 @@ components.d.ts
 .eslintrc-ts.js
 .gitmessage
 .prettierrc.js
-postcss.config.js
 babel.config.js
 pnpm-lock.yaml
 tsconfig.json

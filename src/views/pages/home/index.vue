@@ -1,12 +1,12 @@
 <template>
-  <div class="home-page">
-    <van-swipe class="swiper-box" :autoplay="3000" indicator-color="white" lazy-render>
+  <div class="home-page wh100 page-padding">
+    <van-swipe class="swiper-box !h-44" :autoplay="3000" indicator-color="white" lazy-render>
       <van-swipe-item v-for="image in images" :key="image">
         <img :src="image" class="wh100" />
       </van-swipe-item>
     </van-swipe>
 
-    <van-button type="primary" block class="page-top-margin"> 提交 </van-button>
+    <van-button type="primary" block class="mt-4 h-10"> 提交 </van-button>
   </div>
 </template>
 

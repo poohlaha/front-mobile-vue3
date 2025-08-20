@@ -2,7 +2,7 @@
 REQUEST_TIMEOUT = 10000
 PAGE_SIZE = 10
 LANGUAGES = ['zh', 'en']
-SKINS = ['theme_orange', 'theme_blue']
+SKINS = ['light', 'dark']
 LANGUAGES_NAME = 'BhYkfC34FW2ldKGw9862eZ1Voxyy3iAC'
 
 # message

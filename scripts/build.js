@@ -115,7 +115,6 @@ class ProjectBuilder {
     WebpackDllCompiler(this._script, {
       entry: {
         //vendor: ['vue', 'vue-router'],
-        axios: ['axios']
         // other: ['crypto-js'],
       },
       output: {
@@ -153,6 +152,16 @@ class ProjectBuilder {
           'vant/es': 'vant/lib',
         },
          */
+        loaders: [
+          {
+            test: /\.css$/i,
+            use: [
+              { loader: 'style-loader' },
+              { loader: 'css-loader' },
+              { loader: 'postcss-loader' }
+            ]
+          }
+        ],
         settings: {
           usePurgecssPlugin: false,
           usePwaPlugin: false,
@@ -161,6 +170,7 @@ class ProjectBuilder {
           generateReport: false,
           useTerserWebpackPlugin: true,
           providePlugin: {},
+          useCssLoader: false,
           compress: {
             enable: false,
             deleteOutput: true,
