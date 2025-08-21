@@ -21,32 +21,8 @@ const EXIT = {
    * @param redirectUrl 重定向url
    */
   logout: (text = '', redirectUrl = '') => {
-    STORAGE.clearUserInfo()
+    USER.clearUserInfo()
     PAGE_JUMP.toLoginPage({ text, redirectUrl })
-  }
-}
-
-// 存储相关
-const STORAGE = {
-  /**
-   * 清除用户信息
-   */
-  clearUserInfo: () => {
-    // 删除用户信息
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`)
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${CONSTANT.TAB_INDEX_KEY}`)
-
-    // 删除Token
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
-    Utils.clearSessionStorage()
-  },
-
-  /**
-   * 清除所有信息
-   */
-  clear: () => {
-    Utils.clearLocalStorage()
-    Utils.clearSessionStorage()
   }
 }
 
@@ -77,55 +53,6 @@ const PAGE_JUMP = {
 
     const getUrl = () => (isReplace ? window.location.replace(url) : (window.location.href = url))
     !Utils.isBlank(text) ? setTimeout(() => getUrl(), 500) : getUrl()
-  },
-
-  /**
-   * 获取用户信息
-   * 通过OPEN_ID 和 SYSTEM.USER_TOKEN
-   */
-  getUserInfo: () => {
-    let userInfo = Utils.getLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`)
-    if (!userInfo) return null
-
-    if (typeof userInfo === 'string') {
-      try {
-        userInfo = JSON.parse(userInfo)
-      } catch (e) {
-        userInfo = null
-      }
-    }
-
-    return userInfo
-  },
-
-  /**
-   * 保存用户信息
-   * 通过OPEN_ID 和 SYSTEM.USER_TOKEN、SYSTEM.TOKEN_NAME
-   */
-  setUserInfo: (userInfo: any = {}) => {
-    let token: string = userInfo[SYSTEM.TOKEN_NAME] // 从用户信息中获取 TOKEN
-    delete userInfo[SYSTEM.TOKEN_NAME]
-
-    // 设置用户信息
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`)
-    Utils.setLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`, JSON.stringify(userInfo))
-
-    // 保存 TOKEN
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
-    Utils.setLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`, token)
-  },
-
-  /**
-   * 清除用户信息
-   */
-  clearUserInfo: () => {
-    // 删除用户信息
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`)
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${CONSTANT.TAB_INDEX_KEY}`)
-
-    // 删除Token
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
-    Utils.clearSessionStorage()
   }
 }
 
@@ -270,60 +197,79 @@ const ADDRESS = {
 const USER = {
   /**
    * 获取用户信息
-   * 通过OPEN_ID 和 SYSTEM.USER_TOKEN
    */
-  getUserInfo: () => Utils.getLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`) || {},
+  getUserInfo: () => {
+    const mobile = Utils.getLocal(SYSTEM.USER_PHONE_NAME) || ''
+    if (Utils.isBlank(mobile || '')) {
+      return {}
+    }
+
+    const key = `${SYSTEM.USER_TOKEN_NAME}_${Utils.encrypt(mobile)}`
+    let userInfo = Utils.getLocal(key)
+    if (!userInfo) return {}
+
+    if (typeof userInfo === 'string') {
+      try {
+        userInfo = JSON.parse(userInfo) || {}
+      } catch (_) {
+        userInfo = {}
+      }
+    }
+
+    return userInfo
+  },
 
   /**
    * 保存用户信息
-   * 通过OPEN_ID 和 SYSTEM.USER_TOKEN、SYSTEM.TOKEN_NAME
    * @param userInfo 用户数据, JSON对象
    */
   setUserInfo: (userInfo: { [K: string]: any } = {}) => {
-    if (Utils.isObjectNull(userInfo)) return
+    if (Utils.isObjectNull(userInfo || {})) return
+
     const token = userInfo[SYSTEM.TOKEN_NAME] // 从用户信息中获取 TOKEN
     delete userInfo[SYSTEM.TOKEN_NAME]
 
+    const mobile = userInfo.mobile || ''
+
+    // 设置手机号码
+    Utils.removeLocal(SYSTEM.USER_PHONE_NAME)
+    Utils.setLocal(SYSTEM.USER_PHONE_NAME, mobile)
+
     // 设置用户信息
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`)
-    const phoneInfo = {
-      token: userInfo.loginToken || '',
-      account: userInfo.mobile || '',
-      show: userInfo.mobileShow || ''
-    }
-    const accountInfo = {
-      token: userInfo.fundAccountToken || '',
-      account: userInfo.fundAccount || '',
-      show: userInfo.fundAccountShow || ''
-    }
-    Utils.setLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.USER_TOKEN}`, JSON.stringify({ phoneInfo, accountInfo }))
+    Utils.removeLocal(`${SYSTEM.USER_TOKEN_NAME}_${Utils.encrypt(mobile)}`)
+    Utils.setLocal(`${SYSTEM.USER_TOKEN_NAME}_${Utils.encrypt(mobile)}`, JSON.stringify(userInfo))
 
     // 保存 TOKEN
-    Utils.removeLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`)
-    Utils.setLocal(`${SYSTEM.OPEN_ID}_${SYSTEM.LOCAL_TOKEN}`, token)
+    Utils.removeLocal(SYSTEM.LOCAL_TOKEN_NAME)
+    Utils.setLocal(SYSTEM.LOCAL_TOKEN_NAME, token)
   },
 
   /**
-   * 设置openId
-   * @param openId 用户openId
+   * 清除用户信息
    */
-  setOpenId: (openId = '') => {
-    if (Utils.isBlank(openId)) return
-    Utils.removeLocal(SYSTEM.OPEN_ID)
-    Utils.setLocal(SYSTEM.OPEN_ID, openId || '')
+  clearUserInfo: () => {
+    // 清除 Token
+    Utils.removeLocal(SYSTEM.LOCAL_TOKEN_NAME)
+
+    // 清除手机号码
+    Utils.removeLocal(SYSTEM.USER_PHONE_NAME)
+
+    // 清除用户信息
+    Utils.removeLocal(SYSTEM.USER_TOKEN_NAME)
   },
 
   /**
-   * 获取openId
+   * 获取 Token
    */
-  getOpenId: () => {
-    let openId = ADDRESS.getAddressQueryString('openId') || ''
-    if (Utils.isBlank(openId)) {
-      openId = Utils.getLocal(SYSTEM.OPEN_ID) || ''
-    } else {
-      USER.setOpenId(openId)
-    }
-    return openId
+  getToken: () => {
+    return Utils.getLocal(SYSTEM.LOCAL_TOKEN_NAME) || ''
+  },
+
+  /**
+   * 获取手机号
+   */
+  getMobile: async () => {
+    return Utils.getLocal(SYSTEM.USER_PHONE_NAME) || ''
   }
 }
 
@@ -412,4 +358,4 @@ const TOAST = {
 // 公共模块相关
 const COMMON = {}
 
-export { EXIT, STORAGE, PAGE_JUMP, ADDRESS, USER, TOAST, COMMON }
+export { EXIT, PAGE_JUMP, ADDRESS, USER, TOAST, COMMON }

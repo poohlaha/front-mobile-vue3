@@ -1,4 +1,6 @@
-import { encode, decode } from 'js-base64'
+import { encode as Base64Encode, decode as Base64Decode } from 'js-base64'
+import { encode, decode } from './encrypted'
+
 const Utils = {
   /**
    * 从localStorage中设置值
@@ -21,7 +23,7 @@ const Utils = {
 
     if (typeof data !== 'string') data = JSON.stringify(data)
 
-    window.localStorage.setItem(name, Utils.encrypt(data))
+    window.localStorage.setItem(name, encode(data))
   },
 
   /**
@@ -31,7 +33,7 @@ const Utils = {
     const item = window.localStorage.getItem(name)
     if (!item) return null
 
-    const data = Utils.decrypt(item)
+    const data = decode(item)
     if (!needExpTime) return data
     return item ? JSON.parse(data) : data
   },
@@ -112,7 +114,7 @@ const Utils = {
    */
   encrypt: (str: any): string => {
     if (!str) return ''
-    return encode(str)
+    return Base64Encode(str)
   },
 
   /**
@@ -120,7 +122,7 @@ const Utils = {
    */
   decrypt: (str: any): string => {
     if (!str) return ''
-    return decode(str)
+    return Base64Decode(str)
   },
 
   /**
